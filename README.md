@@ -44,7 +44,7 @@ conda env create -f env.yaml
 from custom data_preprocessing import label_name_check
 label_name_check()
 ```
-- you can get the labels in annotation files -> put in to labels.txt after __ignore__, _background_
+- you can get the labels in annotation files -> put in to labels.txt after ignore and background
 
 2. second
 - run preprocessing
