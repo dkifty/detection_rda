@@ -11,6 +11,8 @@ import sys
 sys.path.append('./utils')
 
 ```
+
+
 video to frame
 
 ```python
@@ -23,6 +25,8 @@ v2f(folder_name, fomatting, frame)
 # frame = interval that you want to slice for frames ex) 30 -> int
 # ex) v2f('230831', 'MP4', 60)
 ```
+
+
 If you want to run detection model ...
 - This model runs on conda env
 - cuda 11.3
