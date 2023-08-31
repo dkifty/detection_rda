@@ -42,6 +42,7 @@ conda env create -f env.yaml
 - change the file 'label.txt'
 ```python
 from custom data_preprocessing import label_name_check
+label_name_check()
 ```
 - you can get the labels in annotation files -> put in to labels.txt
 
