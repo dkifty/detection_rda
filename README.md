@@ -25,7 +25,8 @@ v2f(folder_name, fomatting, frame)
 # ex) v2f('230831', 'MP4', 60)
 ```
 
-## If you want to run detection model ...
+## Setting environment
+- If you want to run detection model ...
 - This model runs on conda env
 - cuda 11.3
 - cudnn 8.2.1
