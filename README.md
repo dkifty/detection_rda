@@ -1,7 +1,7 @@
 # detection_rda
 start with
 
-'''c
+```c
 import sys
 sys.path.append('./utils')
-'''
+```
