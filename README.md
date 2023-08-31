@@ -66,3 +66,9 @@ image_size=(3840,2160)           # if you have other size of image // image_size
 
 data_preprocessing(label2coco = label2coco, coco2yolo2config = coco2yolo2config, img_format=img_format, label_format=label_format, change_label_name=change_label_name, split_rate=split_rate, FOLDERS = FOLDERS, FOLDERS_COCO = FOLDERS_COCO, annotation = annotation, image_size=image_size)
 ```
+- you can get the information
+  - count of image, annotaion file
+  - labels name in annotation file
+  - count of datasets for train / valid / test
+  - and count of labels for each
+  - coco and yolo form annotation
