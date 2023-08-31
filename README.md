@@ -1,5 +1,5 @@
 # detection_rda
-##start with
+## start with
 
 ```c
 git clone https://github.com/dkifty/detection_rda.git
@@ -12,9 +12,9 @@ sys.path.append('./utils')
 
 ```
 
-##video to frame
+## video to frame
 
-```python
+```pythond
 
 from vid2frame import v2f
 v2f(folder_name, fomatting, frame)
@@ -25,7 +25,7 @@ v2f(folder_name, fomatting, frame)
 # ex) v2f('230831', 'MP4', 60)
 ```
 
-##If you want to run detection model ...
+## If you want to run detection model ...
 - This model runs on conda env
 - cuda 11.3
 - cudnn 8.2.1
