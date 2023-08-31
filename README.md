@@ -33,6 +33,7 @@ v2f(folder_name, fomatting, frame)
 
 ```c
 conda env create -f env.yaml
+python -m pip install detectron2 -f https://dl.fbaipublicfiles.com/detectron2/wheels/cu113/torch1.10/index.html
 ```
 
 ## Data preprocessing to detection
