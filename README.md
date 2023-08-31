@@ -2,7 +2,7 @@
 start with
 
 ```c
-https://github.com/dkifty/detection_rda.git
+git clone https://github.com/dkifty/detection_rda.git
 ```
 
 ```python
