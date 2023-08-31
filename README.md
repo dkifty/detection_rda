@@ -14,7 +14,7 @@ sys.path.append('./utils')
 
 ## video to frame
 
-```pythond
+```python
 
 from vid2frame import v2f
 v2f(folder_name, fomatting, frame)
