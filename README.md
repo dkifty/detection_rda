@@ -38,7 +38,7 @@ conda env create -f env.yaml
 ## Data preprocessing to detection
 - Preprocessing annotation made by labelme software
 
-1. first
+1. __first__
 - change the file 'label.txt'
 ```python
 from custom data_preprocessing import label_name_check
@@ -46,7 +46,7 @@ label_name_check()
 ```
 - you can get the labels in annotation files -> put in to labels.txt after ignore and background
 
-2. second
+2. __second__
 - run preprocessing
 
 ```python
