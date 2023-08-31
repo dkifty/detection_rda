@@ -38,6 +38,16 @@ conda env create -f env.yaml
 ## Data preprocessing to detection
 - Preprocessing annotation made by labelme software
 
+1. first
+- change the file 'label.txt'
+```python
+from custom data_preprocessing import label_name_check
+```
+- you can get the labels in annotation files -> put in to labels.txt
+
+2. second
+- run preprocessing
+
 ```python
 from custom_data_preprocessing import data_preprocessing
 
@@ -54,3 +64,4 @@ annotation = 'annotations.json'  # default is annotations.json // if annotatino 
 image_size=(3840,2160)           # if you have other size of image // image_size = (3840, 2160) (default / tuple(int, int))
 
 data_preprocessing(label2coco = label2coco, coco2yolo2config = coco2yolo2config, img_format=img_format, label_format=label_format, change_label_name=change_label_name, split_rate=split_rate, FOLDERS = FOLDERS, FOLDERS_COCO = FOLDERS_COCO, annotation = annotation, image_size=image_size)
+```
