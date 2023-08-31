@@ -26,7 +26,7 @@ v2f(folder_name, fomatting, frame)
 ```
 
 ## Setting environment
-- If you want to run detection model ...
+- If you want to run detection model ... 
 - This model runs on conda env
 - cuda 11.3
 - cudnn 8.2.1
