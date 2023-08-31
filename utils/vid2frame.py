@@ -36,7 +36,6 @@ def vid2frame(vid_path, save_path, name, frame):
         # print(count)
 
     vid.release()
-    # cv2.destroyAllWindows()
 
     print('%d/' % (savecnt) + '%d frames are saved' % frame_num)
     
