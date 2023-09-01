@@ -46,7 +46,7 @@ v2f(folder_name, fomatting, frame)
 - Preprocessing annotation made by labelme software
 
 1. __first__
-- sets parameters
+- set parameters
 ```python
 # parameters
 label2coco = True                # if True - make labelme format annotation to coco format annotation // if False show information of train/valid/test images, annotations for each classes already made
