@@ -84,3 +84,11 @@ data_preprocessing(label2coco = label2coco, coco2yolo2config = coco2yolo2config,
   - count of datasets for train / valid / test
   - and count of labels for each
   - coco and yolo form annotation
+
+## YOLO
+1. __First__
+- create yolo configs
+```python
+from make_yolo_config import make_yolo_config
+make_yolo_config(size = 'all', batch = 16, subdivisions = 8, max_batches = 12000)
+```
