@@ -60,10 +60,12 @@ FOLDERS_COCO = ['./data_dataset_coco_train', './data_dataset_coco_valid', './dat
 annotation = 'annotations.json'  # default is annotations.json // if annotatino file have other name // annotation = annotations.json (string type)
 image_size=(3840,2160)           # if you have other size of image // image_size = (3840, 2160) (default / tuple(int, int))
 
+# model
 batch = 16
 subdivisions = 8
 max_batches = 12000
-size = 'all'
+epochs=200
+resize_img=1024
 ```
 
 2. __second__
@@ -102,3 +104,7 @@ make_yolo_config(size = size, batch = batch, subdivisions = subdivisions, max_ba
 3. __YOLO V4__
 
 4. __YOLO V5__
+```python
+from run_model import run_model
+run_model(model='yolov5s', resize_img=resize_img, batch=batch, epochs=epochs) # you can get model parameter 'yolov5s', 'yolov5n', 'yolov5m', 'yolov5l', 'yolov5x'
+```
