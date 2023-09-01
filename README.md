@@ -65,7 +65,7 @@ image_size=(3840,2160)           # if you have other size of image // image_size
 - change the file 'label.txt'
 ```python
 from custom_data_preprocessing import label_name_check
-label_name_check()
+label_name_check(img_format='jpg', label_format='json')
 ```
 - you can get the labels in annotation files -> put in to labels.txt after ignore and background
 
