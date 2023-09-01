@@ -152,6 +152,7 @@ def darknet_check():
 		os.system('sed -i \'s/CUDNN_HALF=0/CUDNN_HALF=1/\' Makefile')
 		os.system('sed -i \'s/LIBSO=0/LIBSO=1/\' Makefile')
 		os.system('make')
+		os.chdir('./..')
 		
 def setting_darknet_config(darknet_yolo_file=False, batch = 16, subdivisions = 8, max_batches = 12000):
     if darknet_yolo_file != False:
