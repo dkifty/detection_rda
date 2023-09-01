@@ -28,18 +28,15 @@ try:
     import comet_ml  # must be imported before torch (if installed)
 except ImportError:
     comet_ml = None
-    
+
+data_img_list = glob.glob('./data_annotated/*.'+img_format)
+data_label_list = glob.glob('./data_annotated/*.'+label_format)
+data_img_list.sort()
+data_label_list.sort()
+
 def checking_datafile(img_format='jpg', label_format='json'):
-    global data_img_list
-    global data_label_list
-    
+  
     assert os.path.exists('data_annotated'), 'make data folder named \'data_annotated\' and put image and annoation data in that folder'
-    
-    data_img_list = glob.glob('./data_annotated/*.'+img_format)
-    data_label_list = glob.glob('./data_annotated/*.'+label_format)
-    
-    data_img_list.sort()
-    data_label_list.sort()
     
     print(f'images : {len(data_img_list)}')
     print(f'labels : {len(data_label_list)}')
