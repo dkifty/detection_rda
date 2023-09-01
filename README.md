@@ -6,9 +6,12 @@ git clone https://github.com/dkifty/detection_rda.git
 cd detection_rda
 
 conda env create -f env.yaml
+
 conda activate detection_rda
 pip install ipykernel
 python -m ipykernel install --user --name detection_rda --display-name detection_rda
+
+jupyter lab
 ```
 
 ```python
