@@ -3,7 +3,7 @@
 
 ```c
 git clone https://github.com/dkifty/detection_rda.git
-cd detecion_rda
+cd detection_rda
 
 conda env create -f env.yaml
 conda activate detection_rda
