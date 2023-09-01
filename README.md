@@ -49,8 +49,8 @@ v2f(folder_name, fomatting, frame)
 - set parameters
 ```python
 # parameters
-label2coco = True                # if True - make labelme format annotation to coco format annotation // if False show information of train/valid/test images, annotations for each classes already made
-coco2yolo2config = True          # if True - make coco format annotation to yolo format annotation and make yolo config files // if False just check the config files
+label2coco = False                # if True - make labelme format annotation to coco format annotation // if False show information of train/valid/test images, annotations for each classes already made
+coco2yolo2config = False          # if True - make coco format annotation to yolo format annotation and make yolo config files // if False just check the config files
 img_format = 'jpg'               # default is jpg // you can put other format of image files -> string type
 label_format = 'json'            # default is json // you can put other format of annotation files -> string type
 change_label_name = False        # you can change the label names in annotation files // format(a,b,c,d is str type) : change_label_name = {a:b, c:d}
@@ -59,6 +59,11 @@ FOLDERS = ['./data_annotated_train', './data_annotated_valid', './data_annotated
 FOLDERS_COCO = ['./data_dataset_coco_train', './data_dataset_coco_valid', './data_dataset_coco_test']  # you can change the name of coco form train/valid/test folder name // but dont do that.... please...
 annotation = 'annotations.json'  # default is annotations.json // if annotatino file have other name // annotation = annotations.json (string type)
 image_size=(3840,2160)           # if you have other size of image // image_size = (3840, 2160) (default / tuple(int, int))
+
+batch = 16
+subdivisions = 8
+max_batches = 12000
+size = 'all'
 ```
 
 2. __second__
@@ -90,5 +95,5 @@ data_preprocessing(label2coco = label2coco, coco2yolo2config = coco2yolo2config,
 - create yolo configs
 ```python
 from make_yolo_config import make_yolo_config
-make_yolo_config(size = 'all', batch = 16, subdivisions = 8, max_batches = 12000)
+make_yolo_config(size = size, batch = batch, subdivisions = subdivisions, max_batches = max_batches)
 ```
