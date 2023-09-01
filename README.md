@@ -30,6 +30,7 @@ v2f(folder_name, fomatting, frame)
 - This model runs on conda env
 - cuda 11.3
 - cudnn 8.2.1
+- torch 1.10 / torchvision 0.11  torchaudio 0.10
 
 ```c
 conda env create -f env.yaml
