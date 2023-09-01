@@ -10,6 +10,7 @@ conda env create -f env.yaml
 conda activate detection_rda
 pip install ipykernel
 python -m ipykernel install --user --name detection_rda --display-name detection_rda
+python -m pip install detectron2 -f https://dl.fbaipublicfiles.com/detectron2/wheels/cu113/torch1.10/index.html
 
 jupyter lab
 ```
@@ -41,18 +42,13 @@ v2f(folder_name, fomatting, frame)
 - cudnn 8.2.1
 - torch 1.10 / torchvision 0.11  torchaudio 0.10
 
-```c
-conda env create -f env.yaml
-python -m pip install detectron2 -f https://dl.fbaipublicfiles.com/detectron2/wheels/cu113/torch1.10/index.html
-```
-
 ## Data preprocessing to detection
 - Preprocessing annotation made by labelme software
 
 1. __first__
 - change the file 'label.txt'
 ```python
-from custom data_preprocessing import label_name_check
+from custom_data_preprocessing import label_name_check
 label_name_check()
 ```
 - you can get the labels in annotation files -> put in to labels.txt after ignore and background
