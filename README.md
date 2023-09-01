@@ -3,6 +3,7 @@
 
 ```c
 git clone https://github.com/dkifty/detection_rda.git
+conda activate detection_rda
 ```
 
 ```python
