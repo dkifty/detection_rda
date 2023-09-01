@@ -29,14 +29,14 @@ try:
 except ImportError:
     comet_ml = None
 
-data_img_list = glob.glob('./data_annotated/*.'+img_format)
-data_label_list = glob.glob('./data_annotated/*.'+label_format)
-data_img_list.sort()
-data_label_list.sort()
-
 def checking_datafile(img_format='jpg', label_format='json'):
   
     assert os.path.exists('data_annotated'), 'make data folder named \'data_annotated\' and put image and annoation data in that folder'
+    
+    data_img_list = glob.glob('./data_annotated/*.'+img_format)
+    data_label_list = glob.glob('./data_annotated/*.'+label_format)
+    data_img_list.sort()
+    data_label_list.sort()
     
     print(f'images : {len(data_img_list)}')
     print(f'labels : {len(data_label_list)}')
@@ -44,8 +44,13 @@ def checking_datafile(img_format='jpg', label_format='json'):
     assert len(data_img_list) == len(data_label_list), "image, label data files are not matched. should be checked!"
     print('image, label data are checked!')
    
-def label_name_check():
+def label_name_check(img_format='jpg', label_format='json'):
     global label_name
+    
+    data_img_list = glob.glob('./data_annotated/*.'+img_format)
+    data_label_list = glob.glob('./data_annotated/*.'+label_format)
+    data_img_list.sort()
+    data_label_list.sort()
     
     assert os.path.exists('labels.txt'), 'make labels.txt file in this folder : format \n __ignore__ \n _background_ \n label1 \n label2 \n label3 ...'
     
