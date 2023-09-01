@@ -30,7 +30,8 @@ except ImportError:
     comet_ml = None
 
 def checking_datafile(img_format='jpg', label_format='json'):
-  
+    global data_img_list
+    global data_label_list
     assert os.path.exists('data_annotated'), 'make data folder named \'data_annotated\' and put image and annoation data in that folder'
     
     data_img_list = glob.glob('./data_annotated/*.'+img_format)
