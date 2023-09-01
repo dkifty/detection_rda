@@ -46,19 +46,8 @@ v2f(folder_name, fomatting, frame)
 - Preprocessing annotation made by labelme software
 
 1. __first__
-- change the file 'label.txt'
+- sets parameters
 ```python
-from custom_data_preprocessing import label_name_check
-label_name_check()
-```
-- you can get the labels in annotation files -> put in to labels.txt after ignore and background
-
-2. __second__
-- run preprocessing
-
-```python
-from custom_data_preprocessing import data_preprocessing
-
 # parameters
 label2coco = True                # if True - make labelme format annotation to coco format annotation // if False show information of train/valid/test images, annotations for each classes already made
 coco2yolo2config = True          # if True - make coco format annotation to yolo format annotation and make yolo config files // if False just check the config files
@@ -70,6 +59,21 @@ FOLDERS = ['./data_annotated_train', './data_annotated_valid', './data_annotated
 FOLDERS_COCO = ['./data_dataset_coco_train', './data_dataset_coco_valid', './data_dataset_coco_test']  # you can change the name of coco form train/valid/test folder name // but dont do that.... please...
 annotation = 'annotations.json'  # default is annotations.json // if annotatino file have other name // annotation = annotations.json (string type)
 image_size=(3840,2160)           # if you have other size of image // image_size = (3840, 2160) (default / tuple(int, int))
+```
+
+2. __second__
+- change the file 'label.txt'
+```python
+from custom_data_preprocessing import label_name_check
+label_name_check()
+```
+- you can get the labels in annotation files -> put in to labels.txt after ignore and background
+
+3. __third__
+- run preprocessing
+
+```python
+from custom_data_preprocessing import data_preprocessing
 
 # run
 data_preprocessing(label2coco = label2coco, coco2yolo2config = coco2yolo2config, img_format=img_format, label_format=label_format, change_label_name=change_label_name, split_rate=split_rate, FOLDERS = FOLDERS, FOLDERS_COCO = FOLDERS_COCO, annotation = annotation, image_size=image_size)
