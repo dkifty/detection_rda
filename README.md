@@ -97,3 +97,8 @@ data_preprocessing(label2coco = label2coco, coco2yolo2config = coco2yolo2config,
 from make_yolo_config import make_yolo_config
 make_yolo_config(size = size, batch = batch, subdivisions = subdivisions, max_batches = max_batches)
 ```
+2. __YOLO V3__
+
+3. __YOLO V4__
+
+4. __YOLO V5__
