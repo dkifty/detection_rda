@@ -50,7 +50,7 @@ v2f(folder_name, fomatting, frame)
 ```python
 # parameters
 label2coco = False                # if True - make labelme format annotation to coco format annotation // if False show information of train/valid/test images, annotations for each classes already made
-coco2yolo2config = False          # if True - make coco format annotation to yolo format annotation and make yolo config files // if False just check the config files
+coco2yolo = False          # if True - make coco format annotation to yolo format annotation and make yolo config files // if False just check the config files
 img_format = 'jpg'               # default is jpg // you can put other format of image files -> string type
 label_format = 'json'            # default is json // you can put other format of annotation files -> string type
 change_label_name = False        # you can change the label names in annotation files // format(a,b,c,d is str type) : change_label_name = {a:b, c:d}
@@ -83,7 +83,7 @@ label_name_check(img_format='jpg', label_format='json')
 from custom_data_preprocessing import data_preprocessing
 
 # run
-data_preprocessing(label2coco = label2coco, coco2yolo2config = coco2yolo2config, img_format=img_format, label_format=label_format, change_label_name=change_label_name, split_rate=split_rate, FOLDERS = FOLDERS, FOLDERS_COCO = FOLDERS_COCO, annotation = annotation, image_size=image_size)
+data_preprocessing(label2coco = label2coco, coco2yolo = coco2yolo, img_format=img_format, label_format=label_format, change_label_name=change_label_name, split_rate=split_rate, FOLDERS = FOLDERS, FOLDERS_COCO = FOLDERS_COCO, annotation = annotation, image_size=image_size)
 ```
 - you can get the information
   - count of image, annotaion file
