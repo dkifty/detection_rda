@@ -102,7 +102,7 @@ make_yolo_config(size = size, batch = batch, subdivisions = subdivisions, max_ba
 
 2. __YOLO V3__
 ```python
-run_model(model='yolov4') # you can get model parameter include the word 'yolov3'
+run_model(model='yolov3') # you can get model parameter include the word 'yolov3'
 ```
 
 3. __YOLO V4__
