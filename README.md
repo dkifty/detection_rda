@@ -85,6 +85,15 @@ from custom_data_preprocessing import data_preprocessing
 # run
 data_preprocessing(label2coco = label2coco, coco2yolo = coco2yolo, img_format=img_format, label_format=label_format, change_label_name=change_label_name, split_rate=split_rate, FOLDERS = FOLDERS, FOLDERS_COCO = FOLDERS_COCO, annotation = annotation, image_size=image_size)
 ```
+
+4. __4th__
+- set all configs
+
+```python
+from make_configs import make_configs
+make_configs(batch = 16, subdivisions = 8, max_batches = 12000)
+```
+
 - you can get the information
   - count of image, annotaion file
   - labels name in annotation file
@@ -93,26 +102,19 @@ data_preprocessing(label2coco = label2coco, coco2yolo = coco2yolo, img_format=im
   - coco and yolo form annotation
 
 ## YOLO
-1. __First__
-- create yolo configs
-```python
-from make_yolo_config import make_yolo_config
-make_yolo_config(size = size, batch = batch, subdivisions = subdivisions, max_batches = max_batches)
-```
-
-2. __YOLO V3__
+1. __YOLO V3__
 ```python
 from run_model import run_model
 run_model(model='yolov3') # you can get model parameter include the word 'yolov3'
 ```
 
-3. __YOLO V4__
+2. __YOLO V4__
 ```python
 from run_model import run_model
 run_model(model='yolov4') # you can get model parameter include the word 'yolov4'
 ```
 
-4. __YOLO V5__
+3. __YOLO V5__
 ```python
 from run_model import run_model
 run_model(model='yolov5s', resize_img=resize_img, batch=batch, epochs=epochs) # you can get model parameter 'yolov5s', 'yolov5n', 'yolov5m', 'yolov5l', 'yolov5x'
