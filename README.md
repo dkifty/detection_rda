@@ -49,8 +49,8 @@ v2f(folder_name, fomatting, frame)
 - set parameters
 ```python
 # parameters
-label2coco = False                # if True - make labelme format annotation to coco format annotation // if False show information of train/valid/test images, annotations for each classes already made
-coco2yolo = False          # if True - make coco format annotation to yolo format annotation and make yolo config files // if False just check the config files
+label2coco = True                # if True - make labelme format annotation to coco format annotation // if False show information of train/valid/test images, annotations for each classes already made
+coco2yolo = True          # if True - make coco format annotation to yolo format annotation and make yolo config files // if False just check the config files
 img_format = 'jpg'               # default is jpg // you can put other format of image files -> string type
 label_format = 'json'            # default is json // you can put other format of annotation files -> string type
 change_label_name = False        # you can change the label names in annotation files // format(a,b,c,d is str type) : change_label_name = {a:b, c:d}
