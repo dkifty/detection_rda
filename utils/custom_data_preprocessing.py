@@ -496,7 +496,7 @@ def yolo_config_preprocessing(annotation = 'annotations.json', image_size=(3840,
         coco2yolo(annotation=os.path.join(folders_coco, 'annotations.json'), image_size = (3840,2160))
         print('complete')
     
-def data_preprocessing(label2coco = True, coco2yolo2config = True, img_format='jpg', label_format='json', change_label_name=False, split_rate=False, FOLDERS = ['./data_annotated_train', './data_annotated_valid', './data_annotated_test'], FOLDERS_COCO = ['./data_dataset_coco_train', './data_dataset_coco_valid', './data_dataset_coco_test'], annotation = 'annotations.json', image_size=(3840,2160)):
+def data_preprocessing(label2coco = True, coco2yolo = True, img_format='jpg', label_format='json', change_label_name=False, split_rate=False, FOLDERS = ['./data_annotated_train', './data_annotated_valid', './data_annotated_test'], FOLDERS_COCO = ['./data_dataset_coco_train', './data_dataset_coco_valid', './data_dataset_coco_test'], annotation = 'annotations.json', image_size=(3840,2160)):
     print('')
     print('data_preprocessing_start... \nmade by WJ CHOI... ver.1... \ncreated 23.08.30... modified 23.08.30')
     print('')
@@ -524,7 +524,7 @@ def data_preprocessing(label2coco = True, coco2yolo2config = True, img_format='j
     print('')
     print('coco form datasets checked')
     
-    if coco2yolo2config == True:
+    if coco2yolo == True:
         yolo_config_preprocessing(annotation = annotation, image_size=image_size)
     else:
     	for folders_coco in FOLDERS_COCO:
