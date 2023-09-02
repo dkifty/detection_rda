@@ -102,6 +102,7 @@ make_configs(batch = batch, subdivisions = subdivisions, max_batches = max_batch
   - coco and yolo form annotation
  
 ## models...
+```python
 ------------darknet------------
 yolov4-tiny-custom
 yolov4-tiny-3l
@@ -175,8 +176,9 @@ maskrcnn_R101_DC5_3x
 maskrcnn_R101_FPN_3x
 
 maskrcnn_X101_FPN_3x
+```
 
-## Detection models
+## Detection models run
 1. __YOLO V3__
 ```python
 from run_model import run_model
