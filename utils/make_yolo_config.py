@@ -253,11 +253,11 @@ def daknet_model_all(size=DARKNET_MODELS, BATCH = 16, subdivisions = 8, max_batc
     print('darknet config... complete')
 
 def make_yolo_config(batch = 16, subdivisions = 8, max_batches = 12000):
-    yolov3_4_check()
+    darknet_check()
     print('')
     yolov5_check()
     print('')
-    daknet_model_all(size=DARKNET_MODELS, batch = 16, subdivisions = 8, max_batches = 12000)
+    daknet_model_all(size=DARKNET_MODELS, BATCH = 16, subdivisions = 8, max_batches = 12000)
     print('')
     setting_yolov5_config(size='all', FOLDERS_COCO=['./data_dataset_coco_train', './data_dataset_coco_valid', './data_dataset_coco_test'])
     print('')
