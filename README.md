@@ -101,7 +101,7 @@ make_configs(batch = 16, subdivisions = 8, max_batches = 12000)
   - and count of labels for each
   - coco and yolo form annotation
 
-## YOLO
+## Detection models
 1. __YOLO V3__
 ```python
 from run_model import run_model
