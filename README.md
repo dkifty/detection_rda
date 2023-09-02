@@ -100,6 +100,81 @@ make_configs(batch = batch, subdivisions = subdivisions, max_batches = max_batch
   - count of datasets for train / valid / test
   - and count of labels for each
   - coco and yolo form annotation
+ 
+## models...
+------------darknet------------
+yolov4-tiny-custom
+yolov4-tiny-3l
+yolov4-p5
+yolov4_new
+yolov4x-mish
+yolov4-csp-s-mish
+yolov3_5l
+yolov4-csp-x-mish
+yolov3-spp
+yolov4-p6
+yolov4-csp-x-swish-frozen
+yolov4-tiny
+yolov3-openimages
+yolov4-custom
+yolov4-csp-x-swish
+yolov4-sam-mish-csp-reorg-bfm
+yolov4
+yolov3-tiny_obj
+yolov2-tiny
+yolov7-tiny
+yolov3-tiny_xnor
+yolov3-tiny_3l
+yolov4-tiny_contrastive
+yolov3-tiny
+yolov3
+yolov3-tiny_occlusion_track
+yolov4-p5-frozen
+yolov4-csp
+yolov3-tiny-prn
+yolov4-csp-swish
+
+------------ultralytics------------
+yolov5s
+yolov5n
+yolov5m
+yolov5l
+yolov5x
+
+------------detectron2------------
+fasterrcnn_R50_C4_1x
+fasterrcnn_R50_DC5_1x
+fasterrcnn_R50_FPN_1x
+fasterrcnn_R50_C4_3x
+fasterrcnn_R50_DC5_3x
+fasterrcnn_R50_FPN_3x
+
+fasterrcnn_R101_C4_3x
+fasterrcnn_R101_DC5_3x
+fasterrcnn_R101_FPN_3x
+
+fasterrcnn_X101_FPN_3x
+
+retinanet_R50_FPN_1x
+retinanet_R50_FPN_3x
+retinanet_R101_FPN_3x
+
+fastrcnn_R50_FPN_1x
+rpn_R50_C4_1x
+rpn_R50_FPN_1x
+
+maskrcnn_R50_C4_1x
+maskrcnn_R50_DC5_1x
+maskrcnn_R50_FPN_1x
+maskrcnn_R50_C4_3x
+maskrcnn_R50_DC5_3x
+maskrcnn_R50_FPN_3x
+
+maskrcnn_R101_C4_3x
+maskrcnn_R101_DC5_3x
+maskrcnn_R101_FPN_3x
+
+maskrcnn_X101_FPN_3x
 
 ## Detection models
 1. __YOLO V3__
