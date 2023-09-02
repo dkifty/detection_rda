@@ -99,9 +99,16 @@ data_preprocessing(label2coco = label2coco, coco2yolo = coco2yolo, img_format=im
 from make_yolo_config import make_yolo_config
 make_yolo_config(size = size, batch = batch, subdivisions = subdivisions, max_batches = max_batches)
 ```
+
 2. __YOLO V3__
+```python
+run_model(model='yolov4') # you can get model parameter include the word 'yolov3'
+```
 
 3. __YOLO V4__
+```python
+run_model(model='yolov4') # you can get model parameter include the word 'yolov4'
+```
 
 4. __YOLO V5__
 ```python
