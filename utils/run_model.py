@@ -11,7 +11,7 @@ def run_model(model=None, resize_img=1024, batch=16, epochs=200, FOLDERS_COCO = 
         os.system(yolov5_run)
         
     elif 'yolov4' in model:
-        if not os.path.exist('yolo_configs/models/yolov4.conv.137'):
+        if not os.path.exists('yolo_configs/models/yolov4.conv.137'):
             os.system('wget https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v3_optimal/yolov4.conv.137')
             shutil.move('yolov4.conv.137', 'yolo_configs/models/yolov4.conv.137')
         else:
