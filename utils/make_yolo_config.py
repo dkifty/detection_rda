@@ -226,9 +226,9 @@ def setting_darknet_config(darknet_yolo_file=False, batch = 16, subdivisions = 8
     
     darknet_data = []
     darknet_data.append('classes = ' + str(len(label_name[2:])) + '\n')
-    darknet_data.append('train = train.txt\n')
-    darknet_data.append('valid = valid.txt\n')
-    darknet_data.append('names = obj.names\n')
+    darknet_data.append('train = yolo_configs/data/train.txt\n')
+    darknet_data.append('valid = yolo_configs/data/valid.txt\n')
+    darknet_data.append('names = yolo_configs/data/obj.names\n')
     darknet_data.append('backup = darknet')
         
     darknet_names = []
