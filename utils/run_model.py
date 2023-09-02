@@ -18,7 +18,7 @@ def run_model(model=None, resize_img=1024, batch=16, epochs=200, FOLDERS_COCO = 
             print('model pre-weights already exsits\n')
         
         for folders_coco in FOLDERS_COCO:
-            label_dir = os.path.join(folders_coco, labels)
+            label_dir = os.path.join(folders_coco, 'labels')
             for yolo_annotations in glob.glob(os.path.join(label_dir, '*.txt')):
                 shutil.copy(yolo_annotations, yolo_annotations.replace('labels', 'images'))
         
@@ -44,3 +44,8 @@ def run_model(model=None, resize_img=1024, batch=16, epochs=200, FOLDERS_COCO = 
             
         yolov3_run = './darknet/darknet detector train yolo_configs/data/obj.data yolo_configs/models/' + model + '.cfg yolo_configs/models/darknet53.conv.74 -dont_show -map'
         os.system(yolov3_run)
+
+        for folders_coco in FOLDERS_COCO:
+            label_dir = os.path.join(folders_coco, 'labels')
+            for yolo_annotations in glob.glob(os.path.join(label_dir, '*.txt')):
+                os.remove(yolo_annotations.replace('labels', 'images'))
