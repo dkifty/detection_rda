@@ -161,7 +161,6 @@ retinanet_R50_FPN_1x
 retinanet_R50_FPN_3x
 retinanet_R101_FPN_3x
 
-fastrcnn_R50_FPN_1x
 rpn_R50_C4_1x
 rpn_R50_FPN_1x
 
@@ -196,4 +195,22 @@ run_model(model='yolov4') # you can get model parameter include the word 'yolov4
 ```python
 from run_model import run_model
 run_model(model='yolov5s', resize_img=resize_img, batch=batch, epochs=epochs) # you can get model parameter 'yolov5s', 'yolov5n', 'yolov5m', 'yolov5l', 'yolov5x'
+```
+
+4. __Faster RCNN__
+```python
+from run_model import run_model
+run_model(model='fasterrcnn_R50_C4_1x', NUM_WORKERS = 2, IMS_PER_BATCH = 2, ITER = 12000) # you can get model parameter 'fasterrcnn_R50_C4_1x', 'fasterrcnn_R50_DC5_1x', 'fasterrcnn_R50_FPN_1x', 'fasterrcnn_R50_C4_3x', 'fasterrcnn_R50_FPN_3x', 'fasterrcnn_R101_C4_3x', 'fasterrcnn_R50_DC5_3x', 'fasterrcnn_R101_DC5_3x', 'fasterrcnn_R101_FPN_3x', 'fasterrcnn_X101_FPN_3x'
+```
+
+4. __RetinaNet__
+```python
+from run_model import run_model
+run_model(model='retinanet_R50_FPN_1x', NUM_WORKERS = 2, IMS_PER_BATCH = 2, ITER = 12000) # you can get model parameter 'retinanet_R50_FPN_1x', 'retinanet_R50_FPN_3x', 'retinanet_R101_FPN_3x'
+```
+
+5. __others__
+```python
+from run_model import run_model
+run_model(model='rpn_R50_C4_1x', NUM_WORKERS = 2, IMS_PER_BATCH = 2, ITER = 12000) # you can get model parameter 'rpn_R50_C4_1x', 'rpn_R50_FPN_1x'
 ```
