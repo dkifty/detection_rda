@@ -107,7 +107,6 @@ def make_configs(batch = 16, subdivisions = 8, max_batches = 12000):
     print('retinanet_R50_FPN_3x')
     print('retinanet_R101_FPN_3x')
     print('')
-    print('fastrcnn_R50_FPN_1x')
     print('rpn_R50_C4_1x')
     print('rpn_R50_FPN_1x')
     print('')
