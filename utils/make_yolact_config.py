@@ -105,3 +105,5 @@ def make_yolact_config(resize_img=1024):
     with open('yolact/eval.py', 'w') as eval_config_:
         for line in eval_config:
             eval_config_.write(line)
+
+    print('yolact configs.... complete')
