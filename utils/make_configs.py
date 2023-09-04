@@ -43,9 +43,12 @@ except ImportError:
 sys.path.append('./yolov5')
 ########################################################################################################################
 
-def make_configs(batch = 16, subdivisions = 8, max_batches = 12000):
-    make_yolo_config(batch = batch, subdivisions = subdivisions, max_batches = max_batches)
-    detectron2_check()
+def make_configs(yolo = True, detectron = True, yolact = True, batch = 16, subdivisions = 8, max_batches = 12000):
+    
+    if yolo == True:
+        make_yolo_config(batch = batch, subdivisions = subdivisions, max_batches = max_batches)
+    if Detectron == True:
+    	detectron2_check()
     
     print('')
     print('you can use the models...')
