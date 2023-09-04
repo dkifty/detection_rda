@@ -49,7 +49,7 @@ def make_configs(yolo = True, detectron = True, yolact = True, batch = 16, subdi
     
     if yolo == True:
         make_yolo_config(batch = batch, subdivisions = subdivisions, max_batches = max_batches)
-    if Detectron == True:
+    if detectron == True:
     	detectron2_check()
     if yolact == True:
     	yolact_check()
