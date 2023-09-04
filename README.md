@@ -94,7 +94,7 @@ data_preprocessing(label2coco = label2coco, coco2yolo = coco2yolo, img_format=im
 
 ```python
 from make_configs import make_configs
-make_configs(yolo=True, detectron=True, yolact=True, batch = batch, subdivisions = subdivisions, max_batches = max_batches)
+make_configs(yolo=True, detectron=True, yolact=True, batch = batch, subdivisions = subdivisions, max_batches = max_batches, resize_img = resize_img)
 ```
 
 - you can get the information
