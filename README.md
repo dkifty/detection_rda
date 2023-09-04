@@ -179,6 +179,13 @@ maskrcnn_R101_DC5_3x
 maskrcnn_R101_FPN_3x
 
 maskrcnn_X101_FPN_3x
+
+------------YOLACT------------
+yolact_darknet53
+yolact_resnet50
+yolact_resnet101
+yolact_plus_resnet50
+yolact_plus_resnet101
 ```
 
 ## Detection models run
