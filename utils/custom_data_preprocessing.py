@@ -498,8 +498,6 @@ def yolo_config_preprocessing(annotation = 'annotations.json', image_size=(3840,
     
 def data_preprocessing(label2coco = True, coco2yolo = True, img_format='jpg', label_format='json', change_label_name=False, split_rate=False, FOLDERS = ['./data_annotated_train', './data_annotated_valid', './data_annotated_test'], FOLDERS_COCO = ['./data_dataset_coco_train', './data_dataset_coco_valid', './data_dataset_coco_test'], annotation = 'annotations.json', image_size=(3840,2160)):
     print('')
-    print('data_preprocessing_start... \nmade by WJ CHOI... ver.1... \ncreated 23.08.30... modified 23.08.30')
-    print('')
     if label2coco == True:
         img_label_preprocessing(img_format=img_format, label_format=label_format, change_label_name=change_label_name, split_rate=split_rate, FOLDERS = FOLDERS, FOLDERS_COCO = FOLDERS_COCO)
     else:
