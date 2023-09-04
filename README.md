@@ -66,6 +66,9 @@ subdivisions = 8
 max_batches = 12000
 epochs=200
 resize_img=1024
+NUM_WORKERS = 4
+IMS_PER_BATCH = 8
+ITER = 12000
 ```
 
 2. __second__
@@ -200,17 +203,17 @@ run_model(model='yolov5s', resize_img=resize_img, batch=batch, epochs=epochs) # 
 4. __Faster RCNN__
 ```python
 from run_model import run_model
-run_model(model='fasterrcnn_R50_C4_1x', NUM_WORKERS = 2, IMS_PER_BATCH = 2, ITER = 12000) # you can get model parameter 'fasterrcnn_R50_C4_1x', 'fasterrcnn_R50_DC5_1x', 'fasterrcnn_R50_FPN_1x', 'fasterrcnn_R50_C4_3x', 'fasterrcnn_R50_FPN_3x', 'fasterrcnn_R101_C4_3x', 'fasterrcnn_R50_DC5_3x', 'fasterrcnn_R101_DC5_3x', 'fasterrcnn_R101_FPN_3x', 'fasterrcnn_X101_FPN_3x'
+run_model(model='fasterrcnn_R50_C4_1x', NUM_WORKERS = NUM_WORKERS, IMS_PER_BATCH = IMS_PER_BATCH, ITER = ITER) # you can get model parameter 'fasterrcnn_R50_C4_1x', 'fasterrcnn_R50_DC5_1x', 'fasterrcnn_R50_FPN_1x', 'fasterrcnn_R50_C4_3x', 'fasterrcnn_R50_FPN_3x', 'fasterrcnn_R101_C4_3x', 'fasterrcnn_R50_DC5_3x', 'fasterrcnn_R101_DC5_3x', 'fasterrcnn_R101_FPN_3x', 'fasterrcnn_X101_FPN_3x'
 ```
 
 4. __RetinaNet__
 ```python
 from run_model import run_model
-run_model(model='retinanet_R50_FPN_1x', NUM_WORKERS = 2, IMS_PER_BATCH = 2, ITER = 12000) # you can get model parameter 'retinanet_R50_FPN_1x', 'retinanet_R50_FPN_3x', 'retinanet_R101_FPN_3x'
+run_model(model='retinanet_R50_FPN_1x', NUM_WORKERS = NUM_WORKERS, IMS_PER_BATCH = IMS_PER_BATCH, ITER = ITER) # you can get model parameter 'retinanet_R50_FPN_1x', 'retinanet_R50_FPN_3x', 'retinanet_R101_FPN_3x'
 ```
 
 5. __others__
 ```python
 from run_model import run_model
-run_model(model='rpn_R50_C4_1x', NUM_WORKERS = 2, IMS_PER_BATCH = 2, ITER = 12000) # you can get model parameter 'rpn_R50_C4_1x', 'rpn_R50_FPN_1x'
+run_model(model='rpn_R50_C4_1x', NUM_WORKERS = NUM_WORKERS, IMS_PER_BATCH = IMS_PER_BATCH, ITER = ITER) # you can get model parameter 'rpn_R50_C4_1x', 'rpn_R50_FPN_1x'
 ```
