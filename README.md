@@ -219,6 +219,8 @@ run_model(model='rpn_R50_C4_1x', NUM_WORKERS = NUM_WORKERS, IMS_PER_BATCH = IMS_
 ```
 
 ## Segmentation models run
+
+1. __Mask RCNN__
 ```python
 from run_model import run_model
 run_model(model='maskrcnn_X101_FPN_3x', NUM_WORKERS = NUM_WORKERS, IMS_PER_BATCH = IMS_PER_BATCH, ITER = ITER) # you can get model parameter 'maskrcnn_R50_C4_1x', 'maskrcnn_R50_DC5_1x', 'maskrcnn_R50_FPN_1x', 'maskrcnn_R50_C4_3x', 'maskrcnn_R50_DC5_3x', 'maskrcnn_R50_FPN_3x', 'maskrcnn_R101_C4_3x', 'maskrcnn_R101_DC5_3x', 'maskrcnn_R101_FPN_3x', 'maskrcnn_X101_FPN_3x'
