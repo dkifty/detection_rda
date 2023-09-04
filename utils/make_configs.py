@@ -28,6 +28,8 @@ import sys
 sys.path.append('./utils')
 from make_yolo_config import *
 from set_detectron2 import *
+from set_yolact import *
+from make_yolact_config import *
 
 
 FILE = Path(__file__).resolve()
@@ -43,12 +45,15 @@ except ImportError:
 sys.path.append('./yolov5')
 ########################################################################################################################
 
-def make_configs(yolo = True, detectron = True, yolact = True, batch = 16, subdivisions = 8, max_batches = 12000):
+def make_configs(yolo = True, detectron = True, yolact = True, batch = 16, subdivisions = 8, max_batches = 12000, resize_img=1024):
     
     if yolo == True:
         make_yolo_config(batch = batch, subdivisions = subdivisions, max_batches = max_batches)
     if Detectron == True:
     	detectron2_check()
+    if yolact == True:
+    	yolact_check()
+    	make_yolact_config(resize_img=resize_img)
     
     print('')
     print('you can use the models...')
@@ -126,4 +131,9 @@ def make_configs(yolo = True, detectron = True, yolact = True, batch = 16, subdi
     print('')
     print('maskrcnn_X101_FPN_3x')
     print('')
+    print('yolact_darknet53')
+    print('yolact_resnet50')
+    print('yolact_resnet101')
+    print('yolact_plus_resnet50')
+    print('yolact_plus_resnet101')
     print('-------------------------------------------')
