@@ -206,14 +206,20 @@ from run_model import run_model
 run_model(model='fasterrcnn_R50_C4_1x', NUM_WORKERS = NUM_WORKERS, IMS_PER_BATCH = IMS_PER_BATCH, ITER = ITER) # you can get model parameter 'fasterrcnn_R50_C4_1x', 'fasterrcnn_R50_DC5_1x', 'fasterrcnn_R50_FPN_1x', 'fasterrcnn_R50_C4_3x', 'fasterrcnn_R50_FPN_3x', 'fasterrcnn_R101_C4_3x', 'fasterrcnn_R50_DC5_3x', 'fasterrcnn_R101_DC5_3x', 'fasterrcnn_R101_FPN_3x', 'fasterrcnn_X101_FPN_3x'
 ```
 
-4. __RetinaNet__
+5. __RetinaNet__
 ```python
 from run_model import run_model
 run_model(model='retinanet_R50_FPN_1x', NUM_WORKERS = NUM_WORKERS, IMS_PER_BATCH = IMS_PER_BATCH, ITER = ITER) # you can get model parameter 'retinanet_R50_FPN_1x', 'retinanet_R50_FPN_3x', 'retinanet_R101_FPN_3x'
 ```
 
-5. __others__
+6. __others__
 ```python
 from run_model import run_model
 run_model(model='rpn_R50_C4_1x', NUM_WORKERS = NUM_WORKERS, IMS_PER_BATCH = IMS_PER_BATCH, ITER = ITER) # you can get model parameter 'rpn_R50_C4_1x', 'rpn_R50_FPN_1x'
+```
+
+## Segmentation models run
+```python
+from run_model import run_model
+run_model(model='maskrcnn_X101_FPN_3x', NUM_WORKERS = NUM_WORKERS, IMS_PER_BATCH = IMS_PER_BATCH, ITER = ITER) # you can get model parameter 'maskrcnn_R50_C4_1x', 'maskrcnn_R50_DC5_1x', 'maskrcnn_R50_FPN_1x', 'maskrcnn_R50_C4_3x', 'maskrcnn_R50_DC5_3x', 'maskrcnn_R50_FPN_3x', 'maskrcnn_R101_C4_3x', 'maskrcnn_R101_DC5_3x', 'maskrcnn_R101_FPN_3x', 'maskrcnn_X101_FPN_3x'
 ```
