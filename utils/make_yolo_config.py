@@ -257,7 +257,7 @@ def make_yolo_config(batch = 16, subdivisions = 8, max_batches = 12000):
     print('')
     yolov5_check()
     print('')
-    daknet_model_all(size=DARKNET_MODELS, BATCH = 16, subdivisions = 8, max_batches = 12000)
+    daknet_model_all(size=DARKNET_MODELS, BATCH = 16, subdivisions = 8, max_batches = max_batches)
     print('')
     setting_yolov5_config(size='all', FOLDERS_COCO=['./data_dataset_coco_train', './data_dataset_coco_valid', './data_dataset_coco_test'])
     print('')
