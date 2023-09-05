@@ -17,7 +17,7 @@ for a in labels:
 label_list.sort()
 label_name = label_list
 
-def run_model(model=None, train=True, val = True, test=True, iou = 0.5, resize_img=1024, batch=16, epochs=200, FOLDERS_COCO = ['./data_dataset_coco_train', './data_dataset_coco_valid', './data_dataset_coco_test'], NUM_WORKERS = 2, IMS_PER_BATCH = 2, ITER = 12000):
+def run_model(model=None, train=True, val = True, test = True, iou = 0.5, resize_img=1024, batch=16, epochs=200, FOLDERS_COCO = ['./data_dataset_coco_train', './data_dataset_coco_valid', './data_dataset_coco_test'], NUM_WORKERS = 2, IMS_PER_BATCH = 2, ITER = 12000):
     if 'yolov5' in model:
         if train == True:
             print('-----', model, 'train task -----')
@@ -56,9 +56,11 @@ def run_model(model=None, train=True, val = True, test=True, iou = 0.5, resize_i
             os.system(yolov4_run)    
         else:
             pass
-        if val == True: ### weight경로 수정 필요함 아니 일단 되는지부터...
+        if val == True: 
             print('-----', model, 'validation task -----')
-            darknet_val = './darknetdarknet detector map yolo_configs/data/obj.data yolo_configs/models/' + model + '.cfg darknet/weights/'+model+'_best.weights -points 0'
+            darknet_val = './darknet/darknet detector map yolo_configs/data/obj.data yolo_configs/models/' + model + '.cfg darknet/'+model+'_best.weights -points 0'
+            os.system(darknet_val)
+            print(darknet_val)
         else:
             pass
         if test == True:
@@ -66,34 +68,47 @@ def run_model(model=None, train=True, val = True, test=True, iou = 0.5, resize_i
             if not os.path.exists('darknet/'+model+'_outputs'):
                 os.mkdir('darknet/'+model+'_outputs')
             
-            os.chdir('./darknet')
             os.system('sed -i \'s/batch=16/batch=1/\' yolo_configs/models/' + model + '.cfg')
             os.system('sed -i \'s/subdivisions=8/subdivisions=1/\' yolo_configs/models/' + model + '.cfg')
+            with open('yolo_configs/data/obj.data', 'r') as obj_data_:
+                obj_data = obj_data_.readlines()
+            obj_data[3] = 'names = ../yolo_configs/data/obj.names\n'
+            with open('yolo_configs/data/obj.data', 'w') as obj_data_:
+                for lines in obj_data:
+                    obj_data_.write(lines)
+            
+            os.system('sed -i \'s/names = yolo_configs/data/obj.names/names = ../yolo_configs/data/obj.names/\' yolo_configs/data/obj.data')
+                        
+            os.chdir('./darknet')
+
+            print(os.getcwd())
+            for test_images in glob.glob('../data_dataset_coco_test/images/*.jpg'):
+                darknet_test = './darknet detector test ../yolo_configs/data/obj.data ../yolo_configs/models/' + model + '.cfg ./'+model+'_best.weights ' + test_images + ' -thresh 0.5 -dont_show'   
+                os.system(darknet_test)
+                shutil.move('predictions.jpg', './'+model+'_outputs/'+test_images.split('/')[-1])
+            print('test images ---> darknet/'+model+'_outputs')
+                
             os.chdir('./..')
             
-            for test_images in glob.glob('data_dataset_coco_test/images/*.jpg'):
-                os.system('./darknet/darknet detector test yolo_configs/data/obj.data yolo_configs/models/' + model + '.cfg darknet/weights/'+model+'_best.weights ' + test_images + ' -thresh 0.5 -ext_output -dont_show')
-                shutil.move('darknet/predictions.jpg', 'darkent/'+model+'_outputs/'+test_images+'.jpg')
-                print('test images ---> darknet/'+model+'_outputs')
-                
-            os.chdir('./darknet')
+            with open('yolo_configs/data/obj.data', 'r') as obj_data_:
+                obj_data = obj_data_.readlines()
+            obj_data[3] = 'names = yolo_configs/data/obj.names\n'
+            with open('yolo_configs/data/obj.data', 'w') as obj_data_:
+                for lines in obj_data:
+                    obj_data_.write(lines)
             os.system('sed -i \'s/batch=1/batch=16/\' yolo_configs/models/' + model + '.cfg')
-            os.system('sed -i \'s/subdivisions=1/subdivisions=8/\' yolo_configs/models/' + model + '.cfg')
-            os.chdir('./..')
-        else:
-            pass
-        
+            os.system('sed -i \'s/subdivisions=1/subdivisions=8/\' yolo_configs/models/' + model + '.cfg')        
         for folders_coco in FOLDERS_COCO:
             label_dir = os.path.join(folders_coco, 'labels')
             for yolo_annotations in glob.glob(os.path.join(label_dir, '*.txt')):
                 os.remove(yolo_annotations.replace('labels', 'images')) 
                 
     elif 'yolov3' in model:
-        if not os.path.exists('yolo_configs/models/darknet53.conv.74'):
-            os.system('wget https://pjreddie.com/media/files/darknet53.conv.74')
-            shutil.move('darknet53.conv.74','yolo_configs/models/darknet53.conv.74')
-        else:
-            print('model pre-weights already exsits\n')
+        #if not os.path.exists('yolo_configs/models/darknet53.conv.74'):
+        #    os.system('wget https://pjreddie.com/media/files/darknet53.conv.74')
+        #    shutil.move('darknet53.conv.74','yolo_configs/models/darknet53.conv.74')
+        #else:
+        #    print('model pre-weights already exsits\n')
         
         for folders_coco in FOLDERS_COCO:
             label_dir = os.path.join(folders_coco, 'labels')
@@ -106,9 +121,11 @@ def run_model(model=None, train=True, val = True, test=True, iou = 0.5, resize_i
             os.system(yolov3_run)
         else:
             pass
-        if val == True: ### weight경로 수정 필요함 아니 일단 되는지부터...
+        if val == True: 
             print('-----', model, 'validation task -----')
-            darknet_val = './darknetdarknet detector map yolo_configs/data/obj.data yolo_configs/models/' + model + '.cfg darknet/weights/'+model+'_best.weights -points 0'
+            darknet_val = './darknet/darknet detector map yolo_configs/data/obj.data yolo_configs/models/' + model + '.cfg darknet/'+model+'_best.weights -points 0'
+            os.system(darknet_val)
+            print(darknet_val)
         else:
             pass
         if test == True:
@@ -116,20 +133,36 @@ def run_model(model=None, train=True, val = True, test=True, iou = 0.5, resize_i
             if not os.path.exists('darknet/'+model+'_outputs'):
                 os.mkdir('darknet/'+model+'_outputs')
             
-            os.chdir('./darknet')
             os.system('sed -i \'s/batch=16/batch=1/\' yolo_configs/models/' + model + '.cfg')
             os.system('sed -i \'s/subdivisions=8/subdivisions=1/\' yolo_configs/models/' + model + '.cfg')
+            with open('yolo_configs/data/obj.data', 'r') as obj_data_:
+                obj_data = obj_data_.readlines()
+            obj_data[3] = 'names = ../yolo_configs/data/obj.names\n'
+            with open('yolo_configs/data/obj.data', 'w') as obj_data_:
+                for lines in obj_data:
+                    obj_data_.write(lines)
+            
+            os.system('sed -i \'s/names = yolo_configs/data/obj.names/names = ../yolo_configs/data/obj.names/\' yolo_configs/data/obj.data')
+                        
+            os.chdir('./darknet')
+
+            print(os.getcwd())
+            for test_images in glob.glob('../data_dataset_coco_test/images/*.jpg'):
+                darknet_test = './darknet detector test ../yolo_configs/data/obj.data ../yolo_configs/models/' + model + '.cfg ./'+model+'_best.weights ' + test_images + ' -thresh 0.5 -dont_show'   
+                os.system(darknet_test)
+                shutil.move('predictions.jpg', './'+model+'_outputs/'+test_images.split('/')[-1])
+            print('test images ---> darknet/'+model+'_outputs')
+                
             os.chdir('./..')
             
-            for test_images in glob.glob('data_dataset_coco_test/images/*.jpg'):
-                os.system('./darknet/darknet detector test yolo_configs/data/obj.data yolo_configs/models/' + model + '.cfg darknet/weights/'+model+'_best.weights ' + test_images + ' -thresh 0.5 -ext_output -dont_show')
-                shutil.move('darknet/predictions.jpg', 'darkent/'+model+'_outputs/'+test_images+'.jpg')
-                print('test images ---> darknet/'+model+'_outputs')
-                
-            os.chdir('./darknet')
+            with open('yolo_configs/data/obj.data', 'r') as obj_data_:
+                obj_data = obj_data_.readlines()
+            obj_data[3] = 'names = yolo_configs/data/obj.names\n'
+            with open('yolo_configs/data/obj.data', 'w') as obj_data_:
+                for lines in obj_data:
+                    obj_data_.write(lines)
             os.system('sed -i \'s/batch=1/batch=16/\' yolo_configs/models/' + model + '.cfg')
             os.system('sed -i \'s/subdivisions=1/subdivisions=8/\' yolo_configs/models/' + model + '.cfg')
-            os.chdir('./..')
         
         for folders_coco in FOLDERS_COCO:
             label_dir = os.path.join(folders_coco, 'labels')
