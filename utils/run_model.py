@@ -17,7 +17,7 @@ for a in labels:
 label_list.sort()
 label_name = label_list
 
-def run_model(model=None, train=True, val = True, iou = 0.5, resize_img=1024, batch=16, epochs=200, FOLDERS_COCO = ['./data_dataset_coco_train', './data_dataset_coco_valid', './data_dataset_coco_test'], NUM_WORKERS = 2, IMS_PER_BATCH = 2, ITER = 12000):
+def run_model(model=None, train=True, val = True, test=True, iou = 0.5, resize_img=1024, batch=16, epochs=200, FOLDERS_COCO = ['./data_dataset_coco_train', './data_dataset_coco_valid', './data_dataset_coco_test'], NUM_WORKERS = 2, IMS_PER_BATCH = 2, ITER = 12000):
     if 'yolov5' in model:
         if train == True:
             print('-----', model, 'train task -----')
