@@ -17,11 +17,27 @@ for a in labels:
 label_list.sort()
 label_name = label_list
 
-def run_model(model=None, resize_img=1024, batch=16, epochs=200, FOLDERS_COCO = ['./data_dataset_coco_train', './data_dataset_coco_valid', './data_dataset_coco_test'], NUM_WORKERS = 2, IMS_PER_BATCH = 2, ITER = 12000):
+def run_model(model=None, train=True, val = True, iou = 0.5, resize_img=1024, batch=16, epochs=200, FOLDERS_COCO = ['./data_dataset_coco_train', './data_dataset_coco_valid', './data_dataset_coco_test'], NUM_WORKERS = 2, IMS_PER_BATCH = 2, ITER = 12000):
     if 'yolov5' in model:
-        yolov5_run = 'python3 yolov5/train.py --img ' + str(resize_img) + ' --batch ' + str(batch) + ' --epochs ' + str(epochs) + ' --data yolo_configs/data/custom.yaml --cfg yolo_configs/models/custom_' + model + '.yaml --name custom_results_' + model + '.yaml --cache'
-        os.system(yolov5_run)
-        
+        if train == True:
+            print('-----', model, 'train task -----')
+            yolov5_run = 'python3 yolov5/train.py --img ' + str(resize_img) + ' --batch ' + str(batch) + ' --epochs ' + str(epochs) + ' --data yolo_configs/data/custom.yaml --cfg yolo_configs/models/custom_' + model + '.yaml --name custom_results_' + model + ' --cache'
+            os.system(yolov5_run)
+        else:
+            pass
+        if val == True:
+            print('-----', model, 'validation task -----')
+            yolov5_val = 'python val.py --weights yolov5/runs/train/custom_results_' + model + '/weights/best.pt --data yolo_configs/data/custom.yaml --img ' + str(resize_img) +' --iou ' +str(iou)+' --half --task val --save-txt'
+            os.system(yolov5_val)
+        else:
+            pass
+        if test == True:
+            print('-----', model, 'test task -----')
+            yolov5_test = 'python val.py --weights yolov5/runs/train/custom_results_' + model + '/weights/best.pt --data yolo_configs/data/custom.yaml --img ' + str(resize_img) +' --iou ' +str(iou)+' --half --task test'
+            yolov5_detect = 'python detect.py --weights yolov5/runs/train/custom_results_' + model + '/weights/best.pt --img '+str(resize_img)+' --conf 0.4 --source data_dataset_coco_test/images --save-txt --iou ' +str(iou)
+            os.system(yolov5_test)
+            os.system(yolov5_detect)
+            
     elif 'yolov4' in model:
         if not os.path.exists('yolo_configs/models/yolov4.conv.137'):
             os.system('wget https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v3_optimal/yolov4.conv.137')
@@ -34,14 +50,44 @@ def run_model(model=None, resize_img=1024, batch=16, epochs=200, FOLDERS_COCO = 
             for yolo_annotations in glob.glob(os.path.join(label_dir, '*.txt')):
                 shutil.copy(yolo_annotations, yolo_annotations.replace('labels', 'images'))
         
-        yolov4_run = './darknet/darknet detector train yolo_configs/data/obj.data yolo_configs/models/' + model + '.cfg yolo_configs/models/yolov4.conv.137 -dont_show -map'
-        os.system(yolov4_run)
+        if train == True:
+            print('-----', model, 'train task -----')
+            yolov4_run = './darknet/darknet detector train yolo_configs/data/obj.data yolo_configs/models/' + model + '.cfg yolo_configs/models/yolov4.conv.137 -dont_show -map -clear'
+            os.system(yolov4_run)    
+        else:
+            pass
+        if val == True: ### weight경로 수정 필요함 아니 일단 되는지부터...
+            print('-----', model, 'validation task -----')
+            darknet_val = './darknetdarknet detector map yolo_configs/data/obj.data yolo_configs/models/' + model + '.cfg darknet/weights/'+model+'_best.weights -points 0'
+        else:
+            pass
+        if test == True:
+            print('-----', model, 'test task -----')
+            if not os.path.exists('darknet/'+model+'_outputs'):
+                os.mkdir('darknet/'+model+'_outputs')
+            
+            os.chdir('./darknet')
+            os.system('sed -i \'s/batch=16/batch=1/\' yolo_configs/models/' + model + '.cfg')
+            os.system('sed -i \'s/subdivisions=8/subdivisions=1/\' yolo_configs/models/' + model + '.cfg')
+            os.chdir('./..')
+            
+            for test_images in glob.glob('data_dataset_coco_test/images/*.jpg'):
+                os.system('./darknet/darknet detector test yolo_configs/data/obj.data yolo_configs/models/' + model + '.cfg darknet/weights/'+model+'_best.weights ' + test_images + ' -thresh 0.5 -ext_output -dont_show')
+                shutil.move('darknet/predictions.jpg', 'darkent/'+model+'_outputs/'+test_images+'.jpg')
+                print('test images ---> darknet/'+model+'_outputs')
+                
+            os.chdir('./darknet')
+            os.system('sed -i \'s/batch=1/batch=16/\' yolo_configs/models/' + model + '.cfg')
+            os.system('sed -i \'s/subdivisions=1/subdivisions=8/\' yolo_configs/models/' + model + '.cfg')
+            os.chdir('./..')
+        else:
+            pass
         
         for folders_coco in FOLDERS_COCO:
             label_dir = os.path.join(folders_coco, 'labels')
             for yolo_annotations in glob.glob(os.path.join(label_dir, '*.txt')):
-                os.remove(yolo_annotations.replace('labels', 'images'))
-        
+                os.remove(yolo_annotations.replace('labels', 'images')) 
+                
     elif 'yolov3' in model:
         if not os.path.exists('yolo_configs/models/darknet53.conv.74'):
             os.system('wget https://pjreddie.com/media/files/darknet53.conv.74')
@@ -53,10 +99,38 @@ def run_model(model=None, resize_img=1024, batch=16, epochs=200, FOLDERS_COCO = 
             label_dir = os.path.join(folders_coco, 'labels')
             for yolo_annotations in glob.glob(os.path.join(label_dir, '*.txt')):
                 shutil.copy(yolo_annotations, yolo_annotations.replace('labels', 'images'))
+        
+        if train == True:
+            print('-----', model, 'train task -----')
+            yolov3_run = './darknet/darknet detector train yolo_configs/data/obj.data yolo_configs/models/' + model + '.cfg yolo_configs/models/darknet53.conv.74 -dont_show -map -clear'
+            os.system(yolov3_run)
+        else:
+            pass
+        if val == True: ### weight경로 수정 필요함 아니 일단 되는지부터...
+            print('-----', model, 'validation task -----')
+            darknet_val = './darknetdarknet detector map yolo_configs/data/obj.data yolo_configs/models/' + model + '.cfg darknet/weights/'+model+'_best.weights -points 0'
+        else:
+            pass
+        if test == True:
+            print('-----', model, 'test task -----')
+            if not os.path.exists('darknet/'+model+'_outputs'):
+                os.mkdir('darknet/'+model+'_outputs')
             
-        yolov3_run = './darknet/darknet detector train yolo_configs/data/obj.data yolo_configs/models/' + model + '.cfg yolo_configs/models/darknet53.conv.74 -dont_show -map'
-        os.system(yolov3_run)
-
+            os.chdir('./darknet')
+            os.system('sed -i \'s/batch=16/batch=1/\' yolo_configs/models/' + model + '.cfg')
+            os.system('sed -i \'s/subdivisions=8/subdivisions=1/\' yolo_configs/models/' + model + '.cfg')
+            os.chdir('./..')
+            
+            for test_images in glob.glob('data_dataset_coco_test/images/*.jpg'):
+                os.system('./darknet/darknet detector test yolo_configs/data/obj.data yolo_configs/models/' + model + '.cfg darknet/weights/'+model+'_best.weights ' + test_images + ' -thresh 0.5 -ext_output -dont_show')
+                shutil.move('darknet/predictions.jpg', 'darkent/'+model+'_outputs/'+test_images+'.jpg')
+                print('test images ---> darknet/'+model+'_outputs')
+                
+            os.chdir('./darknet')
+            os.system('sed -i \'s/batch=1/batch=16/\' yolo_configs/models/' + model + '.cfg')
+            os.system('sed -i \'s/subdivisions=1/subdivisions=8/\' yolo_configs/models/' + model + '.cfg')
+            os.chdir('./..')
+        
         for folders_coco in FOLDERS_COCO:
             label_dir = os.path.join(folders_coco, 'labels')
             for yolo_annotations in glob.glob(os.path.join(label_dir, '*.txt')):
@@ -66,7 +140,7 @@ def run_model(model=None, resize_img=1024, batch=16, epochs=200, FOLDERS_COCO = 
         dataset_name = 'data_dataset_coco_train'
         
         if not dataset_name in DatasetCatalog.list():
-            for d in ["data_dataset_coco_train", "data_dataset_coco_valid"]:
+            for d in ["data_dataset_coco_train", "data_dataset_coco_valid", "data_dataset_coco_test"]:
                 register_coco_instances(f"{d}", {}, f"{d}/annotations.json", f"{d}")
             metadata = MetadataCatalog.get("data_dataset_coco_train")
             
@@ -136,8 +210,71 @@ def run_model(model=None, resize_img=1024, batch=16, epochs=200, FOLDERS_COCO = 
         os.makedirs(cfg.OUTPUT_DIR, exist_ok=True)
         trainer = DefaultTrainer(cfg) 
         trainer.resume_or_load(resume=False)
-        trainer.train()
+        
+        if not os.path.exists('detectron2/'+model):
+            os.mkdir('detectron2/'+model)
+        
+        if train == True:
+            print('-----', model, 'train task -----')
+            trainer.train()
+            os.rename(os.path.join(cfg.OUTPUT_DIR, 'model_final.pth'), os.path.join(cfg.OUTPUT_DIR, model+'_weight.pth'))
+        else:
+            pass
+        if val == True:
+            print('-----', model, 'validation task -----')
+            cfg.MODEL.WEIGHTS = os.path.join(cfg.OUTPUT_DIR, model+"_weight.pth") # 혹시나 오류가 날때는 그냥 경로 지정해주면 됨
+            cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.4
+            cfg.MODEL.RETINANET.SCORE_THRESH_TEST = 0.4
+            cfg.DATASETS.TEST = ("data_dataset_coco_valid") # 등록된 이름
+            predictor = DefaultPredictor(cfg)
+            
+            evaluator = COCOEvaluator("data_dataset_coco_valid", output_dir="detectron2/"+model)
+            val_loader = build_detection_test_loader(cfg, "data_dataset_coco_valid")
+            print(inference_on_dataset(predictor.model, val_loader, evaluator))
+        else:
+            pass
+        if test == True:
+            print('-----', model, 'test task -----')
+            cfg.MODEL.WEIGHTS = os.path.join(cfg.OUTPUT_DIR, model+"_weight.pth") # 혹시나 오류가 날때는 그냥 경로 지정해주면 됨
+            cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.4
+            cfg.MODEL.RETINANET.SCORE_THRESH_TEST = 0.4
+            cfg.DATASETS.TEST = ("data_dataset_coco_test") # 등록된 이름
+            predictor = DefaultPredictor(cfg)
+            
+            evaluator = COCOEvaluator("data_dataset_coco_test", output_dir="detectron2/"+model)
+            val_loader = build_detection_test_loader(cfg, "data_dataset_coco_test")
+            print(inference_on_dataset(predictor.model, val_loader, evaluator))
+            
+            dataset_dicts = glob.glob('data_dataset_coco_test/images/*.jpg') # 위에서 등록한 이미지 path
+            for d in dataset_dicts:    
+                im = cv2.imread(d)
+                outputs = predictor(im)
+                v = Visualizer(im[:, :, ::-1],
+                               scale=0.8,
+                               metadata = metadata
+                              )
+                v = v.draw_instance_predictions(outputs["instances"].to("cpu")) ## GPU
+                save = v.get_image()[:, :, ::-1]
+                cv2.imwrite('detectron2/'+model+'/'+d.split('/')[-1],save)
+        else:
+            pass
         
     elif 'yolact' in model:
-        yolact_run = 'python yolact/train.py --config='+model+'_custom_config --batch_size='+batch
-        os.system(yolact_run)
+        if train == True:
+            print('-----', model, 'train task -----')
+            yolact_run = 'python yolact/train.py --config='+model+'_custom_config --batch_size='+batch
+            os.system(yolact_run)
+        else:
+            pass
+        if val == True:
+            print('-----', model, 'validation task -----')
+            pass
+        else:
+            pass
+        if test == True:
+            print('-----', model, 'test task -----')
+            if not os.path.exists('yolact/output_images'):
+                os.mkdir('yolact/output_images')
+            os.systemp('python yolact/eval.py --trained_model=yolact/weights/'+[a for a in glob.glob('yolact/weights/*.pth')][-1].split('/')[-1]+' --config='++model+'_custom_config --score_threshold=0.4 --top_k=15 --images=data_dataset_coco_test/images:yolact/output_images')
+        else:
+            pass
