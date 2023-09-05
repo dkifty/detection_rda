@@ -192,37 +192,37 @@ yolact_plus_resnet101
 1. __YOLO V3__
 ```python
 from run_model import run_model
-run_model(model='yolov3') # you can get model parameter include the word 'yolov3'
+run_model(model='yolov3', train=True, val = True, test = True, iou = 0.5) # you can get model parameter include the word 'yolov3'
 ```
 
 2. __YOLO V4__
 ```python
 from run_model import run_model
-run_model(model='yolov4') # you can get model parameter include the word 'yolov4'
+run_model(model='yolov4', train=True, val = True, test = True, iou = 0.5) # you can get model parameter include the word 'yolov4'
 ```
 
 3. __YOLO V5__
 ```python
 from run_model import run_model
-run_model(model='yolov5s', resize_img=resize_img, batch=batch, epochs=epochs) # you can get model parameter 'yolov5s', 'yolov5n', 'yolov5m', 'yolov5l', 'yolov5x'
+run_model(model='yolov5s', train=True, val = True, test = True, iou = 0.5, resize_img=resize_img, batch=batch, epochs=epochs) # you can get model parameter 'yolov5s', 'yolov5n', 'yolov5m', 'yolov5l', 'yolov5x'
 ```
 
 4. __Faster RCNN__
 ```python
 from run_model import run_model
-run_model(model='fasterrcnn_R50_C4_1x', NUM_WORKERS = NUM_WORKERS, IMS_PER_BATCH = IMS_PER_BATCH, ITER = ITER) # you can get model parameter 'fasterrcnn_R50_C4_1x', 'fasterrcnn_R50_DC5_1x', 'fasterrcnn_R50_FPN_1x', 'fasterrcnn_R50_C4_3x', 'fasterrcnn_R50_FPN_3x', 'fasterrcnn_R101_C4_3x', 'fasterrcnn_R50_DC5_3x', 'fasterrcnn_R101_DC5_3x', 'fasterrcnn_R101_FPN_3x', 'fasterrcnn_X101_FPN_3x'
+run_model(model='fasterrcnn_R50_C4_1x', train=True, val = True, test = True, iou = 0.5, NUM_WORKERS = NUM_WORKERS, IMS_PER_BATCH = IMS_PER_BATCH, ITER = ITER) # you can get model parameter 'fasterrcnn_R50_C4_1x', 'fasterrcnn_R50_DC5_1x', 'fasterrcnn_R50_FPN_1x', 'fasterrcnn_R50_C4_3x', 'fasterrcnn_R50_FPN_3x', 'fasterrcnn_R101_C4_3x', 'fasterrcnn_R50_DC5_3x', 'fasterrcnn_R101_DC5_3x', 'fasterrcnn_R101_FPN_3x', 'fasterrcnn_X101_FPN_3x'
 ```
 
 5. __RetinaNet__
 ```python
 from run_model import run_model
-run_model(model='retinanet_R50_FPN_1x', NUM_WORKERS = NUM_WORKERS, IMS_PER_BATCH = IMS_PER_BATCH, ITER = ITER) # you can get model parameter 'retinanet_R50_FPN_1x', 'retinanet_R50_FPN_3x', 'retinanet_R101_FPN_3x'
+run_model(model='retinanet_R50_FPN_1x', train=True, val = True, test = True, iou = 0.5, NUM_WORKERS = NUM_WORKERS, IMS_PER_BATCH = IMS_PER_BATCH, ITER = ITER) # you can get model parameter 'retinanet_R50_FPN_1x', 'retinanet_R50_FPN_3x', 'retinanet_R101_FPN_3x'
 ```
 
 6. __others__
 ```python
 from run_model import run_model
-run_model(model='rpn_R50_C4_1x', NUM_WORKERS = NUM_WORKERS, IMS_PER_BATCH = IMS_PER_BATCH, ITER = ITER) # you can get model parameter 'rpn_R50_C4_1x', 'rpn_R50_FPN_1x'
+run_model(model='rpn_R50_C4_1x', train=True, val = True, test = True, iou = 0.5, NUM_WORKERS = NUM_WORKERS, IMS_PER_BATCH = IMS_PER_BATCH, ITER = ITER) # you can get model parameter 'rpn_R50_C4_1x', 'rpn_R50_FPN_1x'
 ```
 
 ## Segmentation models run
@@ -230,11 +230,11 @@ run_model(model='rpn_R50_C4_1x', NUM_WORKERS = NUM_WORKERS, IMS_PER_BATCH = IMS_
 1. __Mask RCNN__
 ```python
 from run_model import run_model
-run_model(model='maskrcnn_X101_FPN_3x', NUM_WORKERS = NUM_WORKERS, IMS_PER_BATCH = IMS_PER_BATCH, ITER = ITER) # you can get model parameter 'maskrcnn_R50_C4_1x', 'maskrcnn_R50_DC5_1x', 'maskrcnn_R50_FPN_1x', 'maskrcnn_R50_C4_3x', 'maskrcnn_R50_DC5_3x', 'maskrcnn_R50_FPN_3x', 'maskrcnn_R101_C4_3x', 'maskrcnn_R101_DC5_3x', 'maskrcnn_R101_FPN_3x', 'maskrcnn_X101_FPN_3x'
+run_model(model='maskrcnn_X101_FPN_3x', train=True, val = True, test = True, iou = 0.5, NUM_WORKERS = NUM_WORKERS, IMS_PER_BATCH = IMS_PER_BATCH, ITER = ITER) # you can get model parameter 'maskrcnn_R50_C4_1x', 'maskrcnn_R50_DC5_1x', 'maskrcnn_R50_FPN_1x', 'maskrcnn_R50_C4_3x', 'maskrcnn_R50_DC5_3x', 'maskrcnn_R50_FPN_3x', 'maskrcnn_R101_C4_3x', 'maskrcnn_R101_DC5_3x', 'maskrcnn_R101_FPN_3x', 'maskrcnn_X101_FPN_3x'
 ```
 
 2. __YOLACT__
 ```python
 from run_model import run_model
-run_model(model='yolact_resnet50', batch=batch) # you can get model parameter 'yolact_darknet53', 'yolact_resnet50', 'yolact_resnet101', 'yolact_plus_resnet50', 'yolact_plus_resnet101'
+run_model(model='yolact_resnet50', train=True, val = True, test = True, iou = 0.5, batch=batch) # you can get model parameter 'yolact_darknet53', 'yolact_resnet50', 'yolact_resnet101', 'yolact_plus_resnet50', 'yolact_plus_resnet101'
 ```
