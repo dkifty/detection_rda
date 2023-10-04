@@ -69,6 +69,9 @@ resize_img=1024
 NUM_WORKERS = 4
 IMS_PER_BATCH = 8
 ITER = 12000
+
+# device
+device = 0                       # device = 0 or 1 or 2 or 1,2 or cpu
 ```
 
 2. __second__
