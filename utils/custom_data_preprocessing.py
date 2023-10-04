@@ -76,7 +76,7 @@ def label_name_check(img_format='jpg', label_format='json'):
     annotation_name.sort()
     print(f'annotations are {annotation_name}')
     
-    if label_list[2:] == annotation_name:
+    if label_list.remove('__ignore__').remove('_background_').sort() == annotation_name:
         print('label names are checked!')
     else:
         strange_label = []
