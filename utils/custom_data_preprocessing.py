@@ -80,7 +80,7 @@ def label_name_check(img_format='jpg', label_format='json'):
     label_list_check = label_list
     label_list_check_ = []
     for label_list_check__ in  label_list:
-        if label_list_check__ == '__ignore__' or a == '_background_':
+        if label_list_check__ == '__ignore__' or label_list_check__ == '_background_':
             pass
         else:
             label_list_check_.append(label_list_check__)
