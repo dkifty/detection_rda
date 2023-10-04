@@ -46,6 +46,15 @@ for a in labels:
 label_list.sort()
 label_name = label_list
 
+label_list_check = label_list
+label_list_check_ = []
+for label_list_check__ in  label_list:
+	if label_list_check__ == '__ignore__' or label_list_check__ == '_background_':
+        	pass
+        else:
+        	label_list_check_.append(label_list_check__)
+label_list_check_.sort()
+
 if not os.path.exists('./yolo_configs'):
 	os.mkdir('./yolo_configs')
 
@@ -73,7 +82,7 @@ def yolov5_config_make(size=False):
     with open(changed_model_config, 'rb') as d:
         lines = d.readlines()
         
-    changed_label_parts = 'nc: ' + str(len(label_name[2:]))  + ' # number of classes\n'
+    changed_label_parts = 'nc: ' + str(len(label_list_check_))  + ' # number of classes\n'
     lines[3] = changed_label_parts.encode('utf-8')
     
     with open(changed_model_config, 'wb') as d:
@@ -103,8 +112,8 @@ def setting_yolov5_config(size=False, FOLDERS_COCO=['./data_dataset_coco_train',
             c.write('val : .' + f'{os.path.join(FOLDERS_COCO[1])}' + '/images' + '\n')
             c.write('test : .' + f'{os.path.join(FOLDERS_COCO[2])}' + '/images' + '\n')
             c.write('\n')
-            c.write(f'nc : {len(label_name[2:])}'+'\n')
-            c.write(f'names : {label_name[2:]}')
+            c.write(f'nc : {len(label_list_check_)}'+'\n')
+            c.write(f'names : {label_list_check_}')
     print('costom.yaml file.... created')
         
     if size == 'x':
@@ -185,11 +194,11 @@ def setting_darknet_config(darknet_yolo_file=False, batch = 16, subdivisions = 8
             _before_change = lines[j-10:j+5]
             for b,k in enumerate(_before_change):
                 if 'filters' in k:
-                    lines[j-10+b] = 'filters='+str((len(label_name[2:])+5)*3)+'\n'
+                    lines[j-10+b] = 'filters='+str((len(label_list_check_)+5)*3)+'\n'
                 else:
                     pass
                 if 'classes' in k:
-                    lines[j-10+b] = 'classes='+str(len(label_name[2:]))+'\n'
+                    lines[j-10+b] = 'classes='+str(len(label_list_check_))+'\n'
                 else:
                     pass
                 
@@ -225,15 +234,15 @@ def setting_darknet_config(darknet_yolo_file=False, batch = 16, subdivisions = 8
     assert darknet_yolo_file != False, 'please fill the parameter : darknet_yolo_file = above things'
     
     darknet_data = []
-    darknet_data.append('classes = ' + str(len(label_name[2:])) + '\n')
+    darknet_data.append('classes = ' + str(len(label_list_check_)) + '\n')
     darknet_data.append('train = yolo_configs/data/train.txt\n')
     darknet_data.append('valid = yolo_configs/data/valid.txt\n')
     darknet_data.append('names = yolo_configs/data/obj.names\n')
     darknet_data.append('backup = darknet')
         
     darknet_names = []
-    for names_len in range(len(label_name[2:])):
-        darknet_names.append(label_name[2:][names_len]+'\n')
+    for names_len in range(len(label_list_check_)):
+        darknet_names.append(label_list_check_[names_len]+'\n')
         
     with open('./yolo_configs/data/obj.data', 'w') as a:
         for line in darknet_data:
