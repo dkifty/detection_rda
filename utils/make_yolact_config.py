@@ -11,10 +11,10 @@ label_name = label_list
 label_list_check = label_list
 label_list_check_ = []
 for label_list_check__ in  label_list:
-	if label_list_check__ == '__ignore__' or label_list_check__ == '_background_':
-        	pass
-        else:
-        	label_list_check_.append(label_list_check__)
+    if label_list_check__ == '__ignore__' or label_list_check__ == '_background_':
+        pass
+    else:
+        label_list_check_.append(label_list_check__)
 label_list_check_.sort()
 
 def make_yolact_config(resize_img=1024):
