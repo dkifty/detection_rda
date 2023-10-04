@@ -17,11 +17,11 @@ for a in labels:
 label_list.sort()
 label_name = label_list
 
-def run_model(model=None, train=True, val = True, test = True, iou = 0.5, resize_img=1024, batch=16, epochs=200, FOLDERS_COCO = ['./data_dataset_coco_train', './data_dataset_coco_valid', './data_dataset_coco_test'], NUM_WORKERS = 2, IMS_PER_BATCH = 2, ITER = 12000):
+def run_model(model=None, train=True, val = True, test = True, iou = 0.5, resize_img=1024, batch=16, epochs=200, FOLDERS_COCO = ['./data_dataset_coco_train', './data_dataset_coco_valid', './data_dataset_coco_test'], NUM_WORKERS = 2, IMS_PER_BATCH = 2, ITER = 12000, device=0):
     if 'yolov5' in model:
         if train == True:
             print('-----', model, 'train task -----')
-            yolov5_run = 'python3 yolov5/train.py --img ' + str(resize_img) + ' --batch ' + str(batch) + ' --epochs ' + str(epochs) + ' --data yolo_configs/data/custom.yaml --cfg yolo_configs/models/custom_' + model + '.yaml --name custom_results_' + model + ' --cache'
+            yolov5_run = 'python3 yolov5/train.py --img ' + str(resize_img) + ' --batch ' + str(batch) + ' --epochs ' + str(epochs) + ' --device' + str(device) + ' --data yolo_configs/data/custom.yaml --cfg yolo_configs/models/custom_' + model + '.yaml --name custom_results_' + model + ' --cache'
             os.system(yolov5_run)
         else:
             pass
