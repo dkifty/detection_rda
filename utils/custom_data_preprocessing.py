@@ -47,6 +47,7 @@ def checking_datafile(img_format='jpg', label_format='json'):
    
 def label_name_check(img_format='jpg', label_format='json'):
     global label_name
+    global label_list_check_
     
     data_img_list = glob.glob('./data_annotated/*.'+img_format)
     data_label_list = glob.glob('./data_annotated/*.'+label_format)
@@ -82,14 +83,14 @@ def label_name_check(img_format='jpg', label_format='json'):
         if label_list_check__ == '__ignore__' or a == '_background_':
             pass
         else:
-            label_list_check_.append(a)
+            label_list_check_.append(label_list_check__)
     label_list_check_.sort()
     if label_list_check_ == annotation_name:
         print('label names are checked!')
     else:
         strange_label = []
         for d in annotation_name:
-            if d not in label_list[2:]:
+            if d not in label_list_check_:
                 strange_label.append(d)
                 
         print(f'strange annotations are founded : {strange_label}')
@@ -104,7 +105,7 @@ def label_name_check(img_format='jpg', label_format='json'):
                     if anno['shapes'][f]['label'] == g:
                         print(f'strange annotations named ==> {g} \n could founded in file ==> {e} ==> should be checked')
                         
-    assert label_list[2:] == annotation_name, "check the above annotation files and try again"
+    assert label_list_check_ == annotation_name, "check the above annotation files and try again"
  
 def label_name_change(change_label_name=False):
     if change_label_name == False:
@@ -364,7 +365,7 @@ def counting_labels(FOLDERS = ['./data_annotated_train', './data_annotated_valid
             for j in range(len(anno['shapes'])):
                 object_list.append(anno['shapes'][j]['label'])
         
-        for k in label_name[2:]:
+        for k in label_list_check_:
             globals()['{}_list'.format(k)] = [a for a in object_list if k in a]
             
             b = folders.split('_')[-1]
@@ -400,7 +401,7 @@ def coco2yolo(annotation = 'annotations.json', image_size=(3840,2160)):
         df.loc[(df['img_no'] == e, 'img_no')] = d
     df['labels'] = df['label_no']
     
-    for f, g in zip(list(range(len(label_name[2:]))), label_name[2:]):
+    for f, g in zip(list(range(len(label_list_check_))), label_list_check_):
         df.loc[(df['label_no'] == f+1), 'label_no'] = g
         
     df['labels'] = df['labels'] - 1
