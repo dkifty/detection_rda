@@ -37,7 +37,7 @@ def run_model(model=None, train=True, val = True, test = True, iou = 0.5, resize
             yolov5_detect = 'python yolov5/detect.py --weights yolov5/runs/train/custom_results_' + model + '/weights/best.pt --img '+str(resize_img)+' --conf 0.4 --source data_dataset_coco_test/images --save-txt --iou ' +str(iou)
             os.system(yolov5_test)
             os.system(yolov5_detect)
-	else:
+        else:
             pass
             
     elif 'yolov4' in model:
