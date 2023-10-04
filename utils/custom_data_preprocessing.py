@@ -85,6 +85,7 @@ def label_name_check(img_format='jpg', label_format='json'):
         else:
             label_list_check_.append(label_list_check__)
     label_list_check_.sort()
+    print(label_list_check_)
     if label_list_check_ == annotation_name:
         print('label names are checked!')
     else:
@@ -129,7 +130,7 @@ def label_name_change(change_label_name=False):
             with open(a, 'w') as annotation_chaged:
                 json.dump(anno, annotation_chaged)
                 
-    assert change_label_name == False, 'complete change label name ==> please restart after change the parameter change_label_name = False'
+    assert change_label_name == False, 'complete change label name ==> please restart after change the parameter change_label_name = False // Please change label.txt file'
     
 def split_train_valid_test(split_rate=False, img_format='jpg', label_format='json'):
     img_list = data_img_list
