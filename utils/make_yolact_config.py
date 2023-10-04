@@ -8,6 +8,15 @@ for a in labels:
 label_list.sort()
 label_name = label_list
 
+label_list_check = label_list
+label_list_check_ = []
+for label_list_check__ in  label_list:
+	if label_list_check__ == '__ignore__' or label_list_check__ == '_background_':
+        	pass
+        else:
+        	label_list_check_.append(label_list_check__)
+label_list_check_.sort()
+
 def make_yolact_config(resize_img=1024):
     global yolact_config_file
     with open('yolact/data/config.py', 'r') as yolact_config_file_:
@@ -29,9 +38,9 @@ def make_yolact_config(resize_img=1024):
     DATASETS_DICT['train_images'] = os.path.join('data_dataset_coco_train')
     DATASETS_DICT['valid_info'] = os.path.join('data_dataset_coco_valid', 'annotations.json')
     DATASETS_DICT['valid_images'] = os.path.join('data_dataset_coco_valid')
-    DATASETS_DICT['class_names'] = tuple(label_name[2:])
+    DATASETS_DICT['class_names'] = tuple(label_list_check_)
     LABEL_MAP = {}
-    for a in range(len(tuple(label_name[2:]))):
+    for a in range(len(tuple(label_list_check_))):
         LABEL_MAP[a+1] = a+1
     DATASETS_DICT['label_map'] = LABEL_MAP
     dataset_ = 'custom_dataset = dataset_base.copy(' + str(DATASETS_DICT) + ')\n'
