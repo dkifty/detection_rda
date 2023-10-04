@@ -33,7 +33,7 @@ def run_model(model=None, train=True, val = True, test = True, iou = 0.5, resize
             pass
         if test == True:
             print('-----', model, 'test task -----')
-            yolov5_test = 'python val.py --weights yolov5/runs/train/custom_results_' + model + '/weights/best.pt --data yolo_configs/data/custom.yaml --img ' + str(resize_img) +' --iou ' +str(iou)+' --half --task test'
+            yolov5_test = 'python yolov5/val.py --weights yolov5/runs/train/custom_results_' + model + '/weights/best.pt --data yolo_configs/data/custom.yaml --img ' + str(resize_img) +' --iou ' +str(iou)+' --half --task test'
             yolov5_detect = 'python yolov5/detect.py --weights yolov5/runs/train/custom_results_' + model + '/weights/best.pt --img '+str(resize_img)+' --conf 0.4 --source data_dataset_coco_test/images --save-txt --iou ' +str(iou)
             os.system(yolov5_test)
             os.system(yolov5_detect)
