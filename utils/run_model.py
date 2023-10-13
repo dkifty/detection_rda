@@ -71,6 +71,8 @@ def run_model(model=None, train=True, val = True, test = True, iou = 0.5, resize
         else:
             pass
         
+        os.chdir('./..')
+        
     elif 'yolov4' in model:
         if not os.path.exists('yolo_configs/models/yolov4.conv.137'):
             os.system('wget https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v3_optimal/yolov4.conv.137')
