@@ -149,6 +149,11 @@ yolov5m
 yolov5l
 yolov5x
 
+yolov8s
+yolov8n
+yolov8m
+yolov8l
+yolov8x
 ------------detectron2------------
 fasterrcnn_R50_C4_1x
 fasterrcnn_R50_DC5_1x
@@ -210,19 +215,25 @@ from run_model import run_model
 run_model(model='yolov5s', train=True, val = True, test = True, iou = 0.5, resize_img=resize_img, batch=batch, epochs=epochs) # you can get model parameter 'yolov5s', 'yolov5n', 'yolov5m', 'yolov5l', 'yolov5x'
 ```
 
-4. __Faster RCNN__
+4. __YOLO V8__
+```python
+from run_model import run_model
+run_model(model='yolov8s', train=True, val = True, test = True, iou = 0.5, resize_img=resize_img, batch=batch, epochs=epochs) # you can get model parameter 'yolov8s', 'yolov8n', 'yolov8m', 'yolov8l', 'yolov8x'
+```
+
+5. __Faster RCNN__
 ```python
 from run_model import run_model
 run_model(model='fasterrcnn_R50_C4_1x', train=True, val = True, test = True, iou = 0.5, NUM_WORKERS = NUM_WORKERS, IMS_PER_BATCH = IMS_PER_BATCH, ITER = ITER) # you can get model parameter 'fasterrcnn_R50_C4_1x', 'fasterrcnn_R50_DC5_1x', 'fasterrcnn_R50_FPN_1x', 'fasterrcnn_R50_C4_3x', 'fasterrcnn_R50_FPN_3x', 'fasterrcnn_R101_C4_3x', 'fasterrcnn_R50_DC5_3x', 'fasterrcnn_R101_DC5_3x', 'fasterrcnn_R101_FPN_3x', 'fasterrcnn_X101_FPN_3x'
 ```
 
-5. __RetinaNet__
+6. __RetinaNet__
 ```python
 from run_model import run_model
 run_model(model='retinanet_R50_FPN_1x', train=True, val = True, test = True, iou = 0.5, NUM_WORKERS = NUM_WORKERS, IMS_PER_BATCH = IMS_PER_BATCH, ITER = ITER) # you can get model parameter 'retinanet_R50_FPN_1x', 'retinanet_R50_FPN_3x', 'retinanet_R101_FPN_3x'
 ```
 
-6. __others__
+7. __others__
 ```python
 from run_model import run_model
 run_model(model='rpn_R50_C4_1x', train=True, val = True, test = True, iou = 0.5, NUM_WORKERS = NUM_WORKERS, IMS_PER_BATCH = IMS_PER_BATCH, ITER = ITER) # you can get model parameter 'rpn_R50_C4_1x', 'rpn_R50_FPN_1x'
