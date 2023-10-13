@@ -39,7 +39,38 @@ def run_model(model=None, train=True, val = True, test = True, iou = 0.5, resize
             os.system(yolov5_detect)
         else:
             pass
+    elif 'yolov8' in model:
+        if not os.path.exists('yolov8'):
+            os.mkdir('yolov8')
+        
+        ROOT = os.getcwd()
+        os.chdir('yolov8')
+        
+        if not os.path.exist('weights'):
+            os.mkdir('weights')
             
+        if train == True:
+            global yolov8_savedir
+            print('-----', model, 'train task -----')
+            yolov8 = YOLO(os.path.join('weights', model))
+            yolov8_train = model.train(model=os.path.join('weights', model), data=os.path.join(ROOT, 'yolo_configs/data/custom.yaml'), , imgsz=resize_img, epochs=epochs, batch=batch, device=device)
+            yolov8_savedir = str(results.save_dir)
+        else:
+            pass
+        if val == True:
+            print('-----', model, 'validation task -----')
+            yolov8_custom = YOLO(os.path.join(ROOT, 'runs/detect', yolov8_savedir, 'weights/last.pt'))
+            yolov8_test = yolov8_custom.val(split='val', iou=iou)
+        else:
+            pass
+        if test == True:
+            print('-----', model, 'test task -----')
+            yolov8_custom = YOLO(os.path.join(ROOT, 'runs/detect', yolov8_savedir, 'weights/last.pt'))
+            yolov8_test = yolov8_custom.val(split='test', iou=iou)
+            yolov8_predict = yolov8_custom.predict(source = 'data_dataset_coco_test/images', conf=0.4, save_txt=True, save=True)
+        else:
+            pass
+        
     elif 'yolov4' in model:
         if not os.path.exists('yolo_configs/models/yolov4.conv.137'):
             os.system('wget https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v3_optimal/yolov4.conv.137')
