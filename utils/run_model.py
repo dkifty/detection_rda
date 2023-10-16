@@ -53,7 +53,7 @@ def run_model(model=None, train=True, val = True, test = True, iou = 0.5, resize
             global yolov8_savedir
             print('-----', model, 'train task -----')
             yolov8 = YOLO(os.path.join('weights', model))
-            yolov8_train = model.train(model=os.path.join('weights', model), data=os.path.join(ROOT, 'yolo_configs/data/custom.yaml'), , imgsz=resize_img, epochs=epochs, batch=batch, device=device)
+            yolov8_train = model.train(model=os.path.join('weights', model), data=os.path.join(ROOT, 'yolo_configs/data/custom.yaml'), imgsz=resize_img, epochs=epochs, batch=batch, device=device)
             yolov8_savedir = str(results.save_dir)
         else:
             pass
