@@ -8,6 +8,7 @@ from detectron2.data import DatasetCatalog, MetadataCatalog
 from detectron2.engine import DefaultTrainer
 from detectron2.config import get_cfg
 from detectron2 import model_zoo
+import ultralytics
 
 with open('labels.txt', 'r') as label:
 	labels = label.readlines()
@@ -46,7 +47,7 @@ def run_model(model=None, train=True, val = True, test = True, iou = 0.5, resize
         ROOT = os.getcwd()
         os.chdir('yolov8')
         
-        if not os.path.exist('weights'):
+        if not os.path.exists('weights'):
             os.mkdir('weights')
             
         if train == True:
