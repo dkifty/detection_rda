@@ -8,7 +8,7 @@ from detectron2.data import DatasetCatalog, MetadataCatalog
 from detectron2.engine import DefaultTrainer
 from detectron2.config import get_cfg
 from detectron2 import model_zoo
-import ultralytics
+from ultralytics import YOLO
 
 with open('labels.txt', 'r') as label:
 	labels = label.readlines()
