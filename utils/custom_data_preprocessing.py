@@ -138,7 +138,7 @@ def split_train_valid_test(split_rate=False, img_format='jpg', label_format='jso
     
     file_name = []
     for a in img_list:
-        file_name.append(a.split('/')[-1].split('.')[0])
+        file_name.append(a.split('/')[-1].split('.')[0].split('\\')[-1])
         
     if not os.path.exists('./data_annotated_train'):
         os.mkdir('./data_annotated_train')
