@@ -108,9 +108,18 @@ def setting_yolov5_config(size=False, FOLDERS_COCO=['./data_dataset_coco_train',
     print('train, valid, test txt file.... created')
     
     with open('./yolo_configs/data/custom.yaml', 'w') as c:
-            c.write('train : .' + f'{os.path.join(FOLDERS_COCO[0])}' + '/images' + '\n')
-            c.write('val : .' + f'{os.path.join(FOLDERS_COCO[1])}' + '/images' + '\n')
-            c.write('test : .' + f'{os.path.join(FOLDERS_COCO[2])}' + '/images' + '\n')
+            c.write('train : .' + str(os.path.join(FOLDERS_COCO[0])) + '/images' + '\n')
+            c.write('val : .' + str(os.path.join(FOLDERS_COCO[1])}) + '/images' + '\n')
+            c.write('test : .' + str(os.path.join(FOLDERS_COCO[2])) + '/images' + '\n')
+            c.write('\n')
+            c.write(f'nc : {len(label_list_check_)}'+'\n')
+            c.write(f'names : {label_list_check_}')
+    print('costom.yaml file.... created')
+
+    with open('./yolo_configs/data/custom_v8.yaml', 'w') as c:
+            c.write('train : ../../.' + str(os.path.join(FOLDERS_COCO[0])) + '/images' + '\n')
+            c.write('val : ../../.' + str(os.path.join(FOLDERS_COCO[1])}) + '/images' + '\n')
+            c.write('test : ../../.' + str(os.path.join(FOLDERS_COCO[2])) + '/images' + '\n')
             c.write('\n')
             c.write(f'nc : {len(label_list_check_)}'+'\n')
             c.write(f'names : {label_list_check_}')
