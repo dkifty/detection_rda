@@ -3,11 +3,7 @@
 import os
 import glob
 import shutil
-from detectron2.data.datasets import register_coco_instances
-from detectron2.data import DatasetCatalog, MetadataCatalog
-from detectron2.engine import DefaultTrainer
-from detectron2.config import get_cfg
-from detectron2 import model_zoo
+
 from ultralytics import YOLO
 
 with open('labels.txt', 'r') as label:
@@ -206,7 +202,13 @@ def run_model(model=None, train=True, val = True, test = True, iou = 0.5, resize
                 os.remove(yolo_annotations.replace('labels', 'images'))
     
     elif 'fasterrcnn' or 'fastrcnn' or 'retinanet' or 'rpn' or 'maskrcnn' in model:
-        dataset_name = 'data_dataset_coco_train'
+	from detectron2.data.datasets import register_coco_instances
+	from detectron2.data import DatasetCatalog, MetadataCatalog
+	from detectron2.engine import DefaultTrainer
+	from detectron2.config import get_cfg
+	from detectron2 import model_zoo
+        
+	dataset_name = 'data_dataset_coco_train'
         
         if not dataset_name in DatasetCatalog.list():
             for d in ["data_dataset_coco_train", "data_dataset_coco_valid", "data_dataset_coco_test"]:
