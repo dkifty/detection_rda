@@ -14,11 +14,11 @@ for a in labels:
 label_list.sort()
 label_name = label_list
 
-def run_model(model=None, train=True, val = True, test = True, iou = 0.5, resize_img=1024, batch=16, epochs=200, FOLDERS_COCO = ['./data_dataset_coco_train', './data_dataset_coco_valid', './data_dataset_coco_test'], NUM_WORKERS = 2, IMS_PER_BATCH = 2, ITER = 12000, device=0):
+def run_model(model=None, train=True, val = True, test = True, iou = 0.5, resize_img=1024, batch=16, epochs=200, FOLDERS_COCO = ['./data_dataset_coco_train', './data_dataset_coco_valid', './data_dataset_coco_test'], NUM_WORKERS = 2, IMS_PER_BATCH = 2, ITER = 12000, =0):
     if 'yolov5' in model:
         if train == True:
             print('-----', model, 'train task -----')
-            yolov5_run = 'python3 yolov5/train.py --img ' + str(resize_img) + ' --batch ' + str(batch) + ' --epochs ' + str(epochs) + ' --device' + str(device) + ' --data yolo_configs/data/custom.yaml --cfg yolo_configs/models/custom_' + model + '.yaml --name custom_results_' + model + ' --cache'
+            yolov5_run = 'python3 yolov5/train.py --img ' + str(resize_img) + ' --batch ' + str(batch) + ' --epochs ' + str(epochs) + ' --device ' + str(device) + ' --data yolo_configs/data/custom.yaml --cfg yolo_configs/models/custom_' + model + '.yaml --name custom_results_' + model + ' --cache'
             os.system(yolov5_run)
         else:
             pass
@@ -50,7 +50,7 @@ def run_model(model=None, train=True, val = True, test = True, iou = 0.5, resize
             global yolov8_savedir
             print('-----', model, 'train task -----')
             yolov8 = YOLO(os.path.join('weights', model))
-            yolov8_train = model.train(model=os.path.join('weights', model), data=os.path.join(ROOT, 'yolo_configs/data/custom.yaml'), imgsz=resize_img, epochs=epochs, batch=batch, device=device)
+            yolov8_train = model.train(model=os.path.join('weights', model), data=os.path.join(ROOT, 'yolo_configs/data/custom.yaml'), imgsz=resize_img, epochs=epochs, batch=batch, =)
             yolov8_savedir = str(results.save_dir)
         else:
             pass
