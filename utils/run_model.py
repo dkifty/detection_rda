@@ -203,10 +203,11 @@ def run_model(model=None, train=True, val = True, test = True, iou = 0.5, resize
     
     elif 'fasterrcnn' or 'fastrcnn' or 'retinanet' or 'rpn' or 'maskrcnn' in model:
 	from detectron2.data.datasets import register_coco_instances
-	from detectron2.data import DatasetCatalog, MetadataCatalog
-	from detectron2.engine import DefaultTrainer
+	from detectron2.data import DatasetCatalog, MetadataCatalog, build_detection_test_loader
+	from detectron2.engine import DefaultTrainer, DefaultPredictor
 	from detectron2.config import get_cfg
 	from detectron2 import model_zoo
+	from detectron2.evaluation import COCOEvaluator, inference_on_dataset
         
 	dataset_name = 'data_dataset_coco_train'
         
