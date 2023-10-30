@@ -330,6 +330,7 @@ def run_model(model=None, train=True, val = True, test = True, iou = 0.5, resize
                 v = v.draw_instance_predictions(outputs["instances"].to("cpu")) ## GPU
                 save = v.get_image()[:, :, ::-1]
                 cv2.imwrite('detectron2/'+model+'/'+d.split('/')[-1],save)
+		print(d, 'save_image_complete')
         else:
             pass
         
