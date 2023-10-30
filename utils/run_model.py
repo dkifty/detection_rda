@@ -212,7 +212,7 @@ def run_model(model=None, train=True, val = True, test = True, iou = 0.5, resize
         
         if not dataset_name in DatasetCatalog.list():
             for d in ["data_dataset_coco_train", "data_dataset_coco_valid", "data_dataset_coco_test"]:
-                register_coco_instances(f"{d}", {}, f"{d}/annotations.json", f"{d}")
+                register_coco_instances(d, {}, d+"/annotations.json", d)
             metadata = MetadataCatalog.get("data_dataset_coco_train")
             
         cfg = get_cfg()    
@@ -270,7 +270,7 @@ def run_model(model=None, train=True, val = True, test = True, iou = 0.5, resize
             cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url(config_path)
                         
         cfg.DATASETS.TRAIN = ("data_dataset_coco_train",)
-        cfg.DATASETS.TEST = ("data_dataset_coco_valid")
+        cfg.DATASETS.TEST = ()
         cfg.DATALOADER.NUM_WORKERS = NUM_WORKERS
         cfg.SOLVER.IMS_PER_BATCH = IMS_PER_BATCH
         cfg.SOLVER.BASE_LR = 0.00025
