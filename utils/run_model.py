@@ -3,9 +3,15 @@
 import os
 import glob
 import shutil
+import numpy as np
 import cv2
-
-from ultralytics import YOLO
+from detectron2.data.datasets import register_coco_instances
+from detectron2.data import DatasetCatalog, MetadataCatalog, build_detection_test_loader
+from detectron2.engine import DefaultTrainer, DefaultPredictor
+from detectron2.config import get_cfg
+from detectron2 import model_zoo
+from detectron2.evaluation import COCOEvaluator, inference_on_dataset
+from detectron2.utils.visualizer import ColorMode, Visualizer
 
 with open('labels.txt', 'r') as label:
 	labels = label.readlines()
@@ -15,11 +21,11 @@ for a in labels:
 label_list.sort()
 label_name = label_list
 
-def run_model(model=None, train=True, val = True, test = True, iou = 0.5, resize_img=1024, batch=16, epochs=200, FOLDERS_COCO = ['./data_dataset_coco_train', './data_dataset_coco_valid', './data_dataset_coco_test'], NUM_WORKERS = 2, IMS_PER_BATCH = 2, ITER = 12000, =0):
+def run_model(model=None, train=True, val = True, test = True, iou = 0.5, resize_img=1024, batch=16, epochs=200, FOLDERS_COCO = ['./data_dataset_coco_train', './data_dataset_coco_valid', './data_dataset_coco_test'], NUM_WORKERS = 2, IMS_PER_BATCH = 2, ITER = 12000):
     if 'yolov5' in model:
         if train == True:
             print('-----', model, 'train task -----')
-            yolov5_run = 'python3 yolov5/train.py --img ' + str(resize_img) + ' --batch ' + str(batch) + ' --epochs ' + str(epochs) + ' --device ' + str(device) + ' --data yolo_configs/data/custom.yaml --cfg yolo_configs/models/custom_' + model + '.yaml --name custom_results_' + model + ' --cache'
+            yolov5_run = 'python3 yolov5/train.py --img ' + str(resize_img) + ' --batch ' + str(batch) + ' --epochs ' + str(epochs) + ' --data yolo_configs/data/custom.yaml --cfg yolo_configs/models/custom_' + model + '.yaml --name custom_results_' + model + ' --cache'
             os.system(yolov5_run)
         else:
             pass
@@ -32,45 +38,12 @@ def run_model(model=None, train=True, val = True, test = True, iou = 0.5, resize
         if test == True:
             print('-----', model, 'test task -----')
             yolov5_test = 'python yolov5/val.py --weights yolov5/runs/train/custom_results_' + model + '/weights/best.pt --data yolo_configs/data/custom.yaml --img ' + str(resize_img) +' --iou ' +str(iou)+' --half --task test'
-            yolov5_detect = 'python yolov5/detect.py --weights yolov5/runs/train/custom_results_' + model + '/weights/best.pt --save-txt --img '+str(resize_img)+' --conf 0.4 --source data_dataset_coco_test/images --save-txt --iou ' +str(iou)
+            yolov5_detect = 'python yolov5/detect.py --weights yolov5/runs/train/custom_results_' + model + '/weights/best.pt --img '+str(resize_img)+' --conf 0.4 --source data_dataset_coco_test/images --save-txt --iou ' +str(iou)
             os.system(yolov5_test)
             os.system(yolov5_detect)
         else:
             pass
-    elif 'yolov8' in model:
-        if not os.path.exists('yolov8'):
-            os.mkdir('yolov8')
-        
-        ROOT = os.getcwd()
-        os.chdir('yolov8')
-        
-        if not os.path.exists('weights'):
-            os.mkdir('weights')
             
-        if train == True:
-            global yolov8_savedir
-            print('-----', model, 'train task -----')
-            yolov8 = YOLO(os.path.join('weights', model))
-            yolov8_train = model.train(model=os.path.join('weights', model), data=os.path.join(ROOT, 'yolo_configs/data/custom.yaml'), imgsz=resize_img, epochs=epochs, batch=batch, =)
-            yolov8_savedir = str(results.save_dir)
-        else:
-            pass
-        if val == True:
-            print('-----', model, 'validation task -----')
-            yolov8_custom = YOLO(os.path.join(ROOT, 'runs/detect', yolov8_savedir, 'weights/last.pt'))
-            yolov8_test = yolov8_custom.val(split='val', iou=iou)
-        else:
-            pass
-        if test == True:
-            print('-----', model, 'test task -----')
-            yolov8_custom = YOLO(os.path.join(ROOT, 'runs/detect', yolov8_savedir, 'weights/last.pt'))
-            yolov8_test = yolov8_custom.val(split='test', iou=iou)
-            yolov8_predict = yolov8_custom.predict(source = 'data_dataset_coco_test/images', conf=0.4, save_txt=True, save=True)
-        else:
-            pass
-        
-        os.chdir('./..')
-        
     elif 'yolov4' in model:
         if not os.path.exists('yolo_configs/models/yolov4.conv.137'):
             os.system('wget https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v3_optimal/yolov4.conv.137')
@@ -203,19 +176,11 @@ def run_model(model=None, train=True, val = True, test = True, iou = 0.5, resize
                 os.remove(yolo_annotations.replace('labels', 'images'))
     
     elif 'fasterrcnn' or 'fastrcnn' or 'retinanet' or 'rpn' or 'maskrcnn' in model:
-	from detectron2.data.datasets import register_coco_instances
-	from detectron2.data import DatasetCatalog, MetadataCatalog, build_detection_test_loader
-	from detectron2.engine import DefaultTrainer, DefaultPredictor
-	from detectron2.config import get_cfg
-	from detectron2 import model_zoo
-	from detectron2.evaluation import COCOEvaluator, inference_on_dataset
-	from detectron2.utils.visualizer import ColorMode, Visualizer
-        
-	dataset_name = 'data_dataset_coco_train'
+        dataset_name = 'data_dataset_coco_train'
         
         if not dataset_name in DatasetCatalog.list():
-            for d in ["data_dataset_coco_train", "data_dataset_coco_valid", "data_dataset_coco_test"]:
-                register_coco_instances(d, {}, d+"/annotations.json", d)
+            for asd in ["data_dataset_coco_train", "data_dataset_coco_valid", "data_dataset_coco_test"]:
+                register_coco_instances(asd, {}, asd+"/annotations.json", asd)
             metadata = MetadataCatalog.get("data_dataset_coco_train")
             
         cfg = get_cfg()    
@@ -269,6 +234,7 @@ def run_model(model=None, train=True, val = True, test = True, iou = 0.5, resize
             _1 = backbone_1[:-4]
             _2 = backbone_1[-4:]
             config_path = 'COCO-InstanceSegmentation/'+_1+'_'+_2+'_'+backbone_2[0]+'_'+backbone_2[1:]+'_'+backbone_3+'_'+schedule+'.yaml'
+            print(config_path)
             cfg.merge_from_file(model_zoo.get_config_file(config_path))
             cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url(config_path)
                         
@@ -313,11 +279,11 @@ def run_model(model=None, train=True, val = True, test = True, iou = 0.5, resize
             cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.4
             cfg.MODEL.RETINANET.SCORE_THRESH_TEST = 0.4
             cfg.DATASETS.TEST = ("data_dataset_coco_test") # 등록된 이름
-
-	    MetadataCatalog.get(cfg.DATASETS.TRAIN[0]).thing_colors = [(239, 49, 39), (56, 100, 240), (230, 239, 47), (32, 238, 54), (216, 114, 244)]
-	    class MyVisualizer(Visualizer):
-    	        def _jitter(self, color ):
-        	    return color
+            
+            MetadataCatalog.get(cfg.DATASETS.TRAIN[0]).thing_colors = [(239, 49, 39), (56, 100, 240), (230, 239, 47), (32, 238, 54), (216, 114, 244)]
+            class MyVisualizer(Visualizer):
+            	def _jitter(self, color ):
+            		return color
 	    
             predictor = DefaultPredictor(cfg)
             
@@ -336,7 +302,7 @@ def run_model(model=None, train=True, val = True, test = True, iou = 0.5, resize
                 v = v.draw_instance_predictions(outputs["instances"].to("cpu")) ## GPU
                 save = v.get_image()[:, :, ::-1]
                 cv2.imwrite('detectron2/'+model+'/'+d.split('/')[-1],save)
-		print(d, 'save_image_complete')
+                print(d, 'save_image_complete')
         else:
             pass
         
