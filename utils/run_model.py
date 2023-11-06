@@ -313,6 +313,12 @@ def run_model(model=None, train=True, val = True, test = True, iou = 0.5, resize
             cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.4
             cfg.MODEL.RETINANET.SCORE_THRESH_TEST = 0.4
             cfg.DATASETS.TEST = ("data_dataset_coco_test") # 등록된 이름
+
+	    MetadataCatalog.get(cfg.DATASETS.TRAIN[0]).thing_colors = [(239, 49, 39), (56, 100, 240), (230, 239, 47), (32, 238, 54), (216, 114, 244)]
+	    class MyVisualizer(Visualizer):
+    	        def _jitter(self, color ):
+        	    return color
+	    
             predictor = DefaultPredictor(cfg)
             
             evaluator = COCOEvaluator("data_dataset_coco_test", output_dir="detectron2/"+model)
