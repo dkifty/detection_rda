@@ -21,8 +21,7 @@ def detectron2_check():
         import distutils.core
         dist = distutils.core.run_setup("detectron2/setup.py")
         for a in dist.install_requires:
-        	os.system('python -m pip install '+a)
-        sys.path.insert(0, os.path.abspath('detectron2/detectron2'))
+        	os.system('python -m pip install '+a)  
         
         with open('detectron2/detectron2/evaluation/coco_evaluation.py', 'r') as f:
             lines = f.readlines()
@@ -30,6 +29,8 @@ def detectron2_check():
         with open('detectron2/detectron2/evaluation/coco_evaluation.py', 'w') as f:
             for line in lines:
                 f.write(line)
+                
+        sys.path.insert(0, os.path.abspath('detectron2/detectron2'))
         
         print('')        
         import torch, detectron2
