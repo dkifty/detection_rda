@@ -380,14 +380,17 @@ def coco2yolo(annotation = 'annotations.json', image_size=(3840,2160)):
     label_no = []
     img_no = []
     bbox = []
+    seG = []
     for a in anno['annotations']:
         label_no_ = a['category_id']
         img_no_ = a['image_id']
         bbox_ = a['bbox']
+        seg_ = a['segmentation'][0]
         
         label_no.append(label_no_)
         img_no.append(img_no_)
         bbox.append(bbox_)
+        seg.append(seg_)
         
     label_dict = {'label_no' : label_no, 'img_no' : img_no, 'bbox' : bbox}
     df = pd.DataFrame(label_dict)
@@ -406,6 +409,24 @@ def coco2yolo(annotation = 'annotations.json', image_size=(3840,2160)):
         df.loc[(df['label_no'] == f+1), 'label_no'] = g
         
     df['labels'] = df['labels'] - 1
+    
+    width = image_size[0]
+    height = image_size[1]
+
+    seg_x = []
+    seg_y = []
+
+    for i in df.seg.tolist():
+        seg_x_ = []
+        seg_y_ = []
+
+        for a, b in enumerate(i):
+            if a%2 == 0:
+                seg_x_.append(b/width)
+            if a%2 == 1:
+                seg_y_.append(b/height)
+        seg_x.append(seg_x_)
+        seg_y.append(seg_y_)
     
     x1 = []
     x2 = []
@@ -428,12 +449,11 @@ def coco2yolo(annotation = 'annotations.json', image_size=(3840,2160)):
     df['bbox_y_max'] = y2
     df['w'] = w
     df['h'] = h
+    df['seg_x'] = seg_x
+    df['seg_y'] = seg_y
     
     df['bbox_x_centre'] = df['bbox_x_min'] + df['w'] / 2
     df['bbox_y_centre'] = df['bbox_y_min'] + df['h'] / 2
-    
-    width = image_size[0]
-    height = image_size[1]
     
     df['x_centre_yolo'] = df['bbox_x_centre'] / width
     df['y_centre_yolo'] = df['bbox_y_centre'] / height
