@@ -473,7 +473,7 @@ def coco2yolo(annotation = 'annotations.json', image_size=(3840,2160)):
                 os.mkdir(os.path.join(dataset_folder, label_folder))
     
     for j in img_list:
-        with open(j.replace('images', 'labels')[:-4]+'.txt', 'wb') as k:
+        with open(j.replace('images', 'labels_det')[:-4]+'.txt', 'wb') as k:
             anno = df[df['img_no'].str.contains(j.split('/')[-1])]
             
             anno_list = []
@@ -494,10 +494,44 @@ def coco2yolo(annotation = 'annotations.json', image_size=(3840,2160)):
                 
         k.close()
     
-        with open(j.replace('images', 'labels')[:-4]+'.txt', 'r') as fin:
+        with open(j.replace('images', 'labels_det')[:-4]+'.txt', 'r') as fin:
             data = fin.read().splitlines(True)
-        with open(j.replace('images', 'labels')[:-4]+'.txt', 'w') as fout:
+        with open(j.replace('images', 'labels_det')[:-4]+'.txt', 'w') as fout:
             fout.writelines(data[1:])
+
+    for k in img_list:
+        with open(j.replace('images', 'labels_seg')[:-4]+'.txt', 'wb') as k:
+            anno = df[df['img_no'].str.contains(j.split('/')[-1])]
+            
+            segmentation_list = []
+            
+            for l in list(range(anno.shape[0])):
+                seg_x_list = ast.literal_eval(anno.iloc[l,:]['seg_x'])
+                seg_y_list = ast.literal_eval(anno.iloc[l,:]['seg_y'])
+                labels = anno.iloc[l,:]['labels']
+                for seg_x, seg_y in zip(seg_x_list, seg_y_list):
+                    if seg_x < 0:
+                        seg_x = 0.
+                    if seg_y < 0:
+                        seg_y = 0.
+                    seg_list.append(str(seg_x))
+                    seg_list.append(str(seg_y))
+                seg = ' '.join(seg_list)
+
+                segmentation_list.append(seg)
+                                
+            counting = 1
+            
+            for m in segmentation_list:
+                k.write(('\n' + m[0]).encode('utf-8'))            
+                
+        k.close()
+    
+        with open(j.replace('images', 'labels_seg')[:-4]+'.txt', 'r') as fin:
+            data = fin.read().splitlines(True)
+        with open(j.replace('images', 'labels_seg')[:-4]+'.txt', 'w') as fout:
+            fout.writelines(data[1:])
+
 
 def yolov5_check():
     if os.path.exists('yolov5'):
