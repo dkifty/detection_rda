@@ -380,7 +380,7 @@ def coco2yolo(annotation = 'annotations.json', image_size=(3840,2160)):
     label_no = []
     img_no = []
     bbox = []
-    seG = []
+    seg = []
     for a in anno['annotations']:
         label_no_ = a['category_id']
         img_no_ = a['image_id']
@@ -463,6 +463,14 @@ def coco2yolo(annotation = 'annotations.json', image_size=(3840,2160)):
     df.to_csv(annotation.replace('json', 'csv'))
     
     img_list = glob.glob(annotation.replace('annotations.json', 'images')+'/*.jpg')
+
+    label_folders = ['labels_seg', 'labels_det']
+    dataset_folders = ['data_annotated_coco_train', 'data_annotated_coco_valid', 'data_annotated_coco_test']
+
+    for dataset_folder in dataset_folders:
+        for label_folder in label_folders:
+            if not os.path.exists(os.path.join(dataset_folder, label_folder)):
+                os.mkdir(os.path.join(dataset_folder, label_folder))
     
     for j in img_list:
         with open(j.replace('images', 'labels')[:-4]+'.txt', 'wb') as k:
