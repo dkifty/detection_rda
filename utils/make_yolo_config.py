@@ -58,6 +58,29 @@ label_list_check_.sort()
 if not os.path.exists('./yolo_configs'):
 	os.mkdir('./yolo_configs')
 
+# yolo v8
+def yolov8_check():
+    try:
+        import ultralytics
+    except ImportError:
+	os.system('pip install ultralytics==8.0.221')
+
+    import ultralytics
+    if ultralytics.__version__ == '8.0.221'
+	pass
+    else:
+        os.system('pip install ultralytics==8.0.221')
+
+def yolov8_config():
+    import site
+    ultralytics_package_utils = os.path.join(site.getsitepackages()[0], 'ultralytics/data/utils.py')
+    with open(ultralytics_package_utils, 'r') as f:
+	lines = f.readlines()
+    lines[33] = "    sa, sb = f'{os.sep}images{os.sep}', f'{os.sep}labels_seg{os.sep}'  # /images/, /labels/ substrings\n"
+    with open(ultralytics_package_utils, 'w') as a:
+	for line in lines:
+	    a.write(line)
+
 # yolo v5 config
 
 def yolov5_check():
@@ -106,7 +129,7 @@ def setting_yolov5_config(size=False, FOLDERS_COCO=['./data_dataset_coco_train',
         with open('./yolo_configs/data/'+a.split('_')[-1]+'.txt', 'w') as b:
             b.write('\n'.join(globals()['{}_img_list'.format(a.split('_')[-1])]) + '\n')
     print('train, valid, test txt file.... created')
-    
+
     with open('./yolo_configs/data/custom.yaml', 'w') as c:
             c.write('train : .' + str(os.path.join(FOLDERS_COCO[0])) + '/images' + '\n')
             c.write('val : .' + str(os.path.join(FOLDERS_COCO[1])) + '/images' + '\n')
@@ -115,6 +138,13 @@ def setting_yolov5_config(size=False, FOLDERS_COCO=['./data_dataset_coco_train',
             c.write(f'nc : {len(label_list_check_)}'+'\n')
             c.write(f'names : {label_list_check_}')
     print('costom.yaml file.... created')
+
+    with open('yolov5/utils/dataloaders.py', 'r') as f:
+	lines = f.readlines()
+    lines[429] = "    sa, sb = f'{os.sep}images{os.sep}', f'{os.sep}labels{os.sep}'  # /images/, /labels_det/ substrings\n"
+    with open('yolov5/utils/dataloaders.py', 'w') as b:
+	for line in lines:
+	    b.write(line)
 
     with open('./yolo_configs/data/custom_v8.yaml', 'w') as c:
             c.write('train : ../../.' + str(os.path.join(FOLDERS_COCO[0])) + '/images' + '\n')
