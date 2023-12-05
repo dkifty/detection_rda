@@ -309,3 +309,5 @@ def make_yolo_config(batch = 16, subdivisions = 8, max_batches = 12000):
     print('')
     setting_yolov5_config(size='all', FOLDERS_COCO=['./data_dataset_coco_train', './data_dataset_coco_valid', './data_dataset_coco_test'])
     print('')
+    yolov8_check()
+    yolov8_config()
