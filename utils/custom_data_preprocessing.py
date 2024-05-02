@@ -392,7 +392,7 @@ def coco2yolo(annotation = 'annotations.json', image_size=(3840,2160)):
         bbox.append(bbox_)
         seg.append(seg_)
         
-    label_dict = {'label_no' : label_no, 'img_no' : img_no, 'bbox' : bbox}
+    label_dict = {'label_no' : label_no, 'img_no' : img_no, 'bbox' : bbox, 'seg' : seg}
     df = pd.DataFrame(label_dict)
     
     img_name = []
@@ -465,7 +465,7 @@ def coco2yolo(annotation = 'annotations.json', image_size=(3840,2160)):
     img_list = glob.glob(annotation.replace('annotations.json', 'images')+'/*.jpg')
 
     label_folders = ['labels_seg', 'labels_det']
-    dataset_folders = ['data_annotated_coco_train', 'data_annotated_coco_valid', 'data_annotated_coco_test']
+    dataset_folders = ['data_dataset_coco_train', 'data_dataset_coco_valid', 'data_dataset_coco_test']
 
     for dataset_folder in dataset_folders:
         for label_folder in label_folders:
@@ -500,15 +500,18 @@ def coco2yolo(annotation = 'annotations.json', image_size=(3840,2160)):
             fout.writelines(data[1:])
 
     for k in img_list:
-        with open(j.replace('images', 'labels_seg')[:-4]+'.txt', 'wb') as k:
-            anno = df[df['img_no'].str.contains(j.split('/')[-1])]
+        with open(k.replace('images', 'labels_seg')[:-4]+'.txt', 'wb') as z:
+            anno = df[df['img_no'].str.contains(k.split('/')[-1])]
             
             segmentation_list = []
             
             for l in list(range(anno.shape[0])):
-                seg_x_list = ast.literal_eval(anno.iloc[l,:]['seg_x'])
-                seg_y_list = ast.literal_eval(anno.iloc[l,:]['seg_y'])
+                #seg_x_list = ast.literal_eval(anno.iloc[l,:]['seg_x']) 왜 str로 안불러지고 리스트로 불러지는지는 모르겠으나... 그렇다고 함 아마 저장한다음 부른게 아니고 그냥 그대로 써서 그럴지
+                #seg_y_list = ast.literal_eval(anno.iloc[l,:]['seg_y'])
+                seg_x_list = anno.iloc[l,:]['seg_x']
+                seg_y_list = anno.iloc[l,:]['seg_y']
                 labels = anno.iloc[l,:]['labels']
+                seg_list = [str(labels)]
                 for seg_x, seg_y in zip(seg_x_list, seg_y_list):
                     if seg_x < 0:
                         seg_x = 0.
@@ -523,15 +526,14 @@ def coco2yolo(annotation = 'annotations.json', image_size=(3840,2160)):
             counting = 1
             
             for m in segmentation_list:
-                k.write(('\n' + m[0]).encode('utf-8'))            
+                z.write(('\n' + m).encode('utf-8'))            
                 
-        k.close()
+        z.close()
     
-        with open(j.replace('images', 'labels_seg')[:-4]+'.txt', 'r') as fin:
+        with open(k.replace('images', 'labels_seg')[:-4]+'.txt', 'r') as fin:
             data = fin.read().splitlines(True)
-        with open(j.replace('images', 'labels_seg')[:-4]+'.txt', 'w') as fout:
+        with open(k.replace('images', 'labels_seg')[:-4]+'.txt', 'w') as fout:
             fout.writelines(data[1:])
-
 
 def yolov5_check():
     if os.path.exists('yolov5'):
