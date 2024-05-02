@@ -584,6 +584,8 @@ def data_preprocessing(label2coco = True, coco2yolo = True, img_format='jpg', la
         label_name = label_list
         
     checking_datafile(img_format=img_format, label_format=label_format)
+    label_name_check()
+    print('')
     counting_labels(FOLDERS = FOLDERS)
     print('data files checked')
     print('')
@@ -593,8 +595,6 @@ def data_preprocessing(label2coco = True, coco2yolo = True, img_format='jpg', la
     print('test : ', len(glob.glob('./data_dataset_coco_test/images/*jpg')))
     print('')
     print('coco form datasets checked')
-    label_name_check()
-    print('')
     if coco2yolo == True:
         yolo_config_preprocessing(annotation = annotation, image_size=image_size)
     else:
