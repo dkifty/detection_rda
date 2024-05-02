@@ -546,8 +546,6 @@ def img_label_preprocessing(img_format='jpg', label_format='json', change_label_
     print('')
     label_name_change(change_label_name=change_label_name)
     print('')
-    label_name_check()
-    print('')
     split_train_valid_test(split_rate=split_rate, img_format=img_format, label_format=label_format)
     print('')
     
@@ -595,7 +593,8 @@ def data_preprocessing(label2coco = True, coco2yolo = True, img_format='jpg', la
     print('test : ', len(glob.glob('./data_dataset_coco_test/images/*jpg')))
     print('')
     print('coco form datasets checked')
-    
+    label_name_check()
+    print('')
     if coco2yolo == True:
         yolo_config_preprocessing(annotation = annotation, image_size=image_size)
     else:
