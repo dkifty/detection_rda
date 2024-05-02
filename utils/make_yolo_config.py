@@ -66,7 +66,7 @@ def yolov8_check():
 	os.system('pip install ultralytics==8.0.221')
 
     import ultralytics
-    if ultralytics.__version__ == '8.0.221'
+    if ultralytics.__version__ == '8.0.221':
 	pass
     else:
         os.system('pip install ultralytics==8.0.221')
