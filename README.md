@@ -79,6 +79,10 @@ device = 0                       # device = 0 or 1 or 2 or 1,2 or cpu
 ```python
 from custom_data_preprocessing import label_name_check
 label_name_check(img_format='jpg', label_format='json')
+
+from custom_data_preprocessing import make_label_file
+make_label_file('Color_checker', 'Flower', 'Fruit_ripen', 'Fruit_unripen', 'Obstacle', 'Old_leaves', 'Picking_point', 'Runner', 'Unidentified')
+# 굳이 오름차순으로 안해도 되게 해놓기는 함... labels.txt파일 생성하는 코드
 ```
 - you can get the labels in annotation files -> put in to labels.txt after ignore and background
 
