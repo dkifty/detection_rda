@@ -44,6 +44,14 @@ def checking_datafile(img_format='jpg', label_format='json'):
         
     assert len(data_img_list) == len(data_label_list), "image, label data files are not matched. should be checked!"
     print('image, label data are checked!')
+
+def make_label_file(*Names):
+    Names = sorted(Names)
+    with open('./labels.txt', 'w') as a:
+        a.write('__ignore__'+'\n')
+        a.write('_background_'+'\n')
+        for name in Names:
+            a.write(f'{name}'+'\n')
    
 def label_name_check(img_format='jpg', label_format='json'):
     global label_name
