@@ -63,11 +63,11 @@ def yolov8_check():
     try:
         import ultralytics
     except ImportError:
-	os.system('pip install ultralytics==8.0.221')
+        os.system('pip install ultralytics==8.0.221')
 
     import ultralytics
     if ultralytics.__version__ == '8.0.221':
-	pass
+        pass
     else:
         os.system('pip install ultralytics==8.0.221')
 
@@ -75,11 +75,11 @@ def yolov8_config():
     import site
     ultralytics_package_utils = os.path.join(site.getsitepackages()[0], 'ultralytics/data/utils.py')
     with open(ultralytics_package_utils, 'r') as f:
-	lines = f.readlines()
+        lines = f.readlines()
     lines[33] = "    sa, sb = f'{os.sep}images{os.sep}', f'{os.sep}labels_seg{os.sep}'  # /images/, /labels/ substrings\n"
     with open(ultralytics_package_utils, 'w') as a:
-	for line in lines:
-	    a.write(line)
+        for line in lines:
+            a.write(line)
 
 # yolo v5 config
 
@@ -140,19 +140,19 @@ def setting_yolov5_config(size=False, FOLDERS_COCO=['./data_dataset_coco_train',
     print('costom.yaml file.... created')
 
     with open('yolov5/utils/dataloaders.py', 'r') as f:
-	lines = f.readlines()
+        lines = f.readlines()
     lines[429] = "    sa, sb = f'{os.sep}images{os.sep}', f'{os.sep}labels{os.sep}'  # /images/, /labels_det/ substrings\n"
     with open('yolov5/utils/dataloaders.py', 'w') as b:
-	for line in lines:
-	    b.write(line)
+        for line in lines:
+            b.write(line)
 
     with open('./yolo_configs/data/custom_v8.yaml', 'w') as c:
-            c.write('train : ../../.' + str(os.path.join(FOLDERS_COCO[0])) + '/images' + '\n')
-            c.write('val : ../../.' + str(os.path.join(FOLDERS_COCO[1])) + '/images' + '\n')
-            c.write('test : ../../.' + str(os.path.join(FOLDERS_COCO[2])) + '/images' + '\n')
-            c.write('\n')
-            c.write(f'nc : {len(label_list_check_)}'+'\n')
-            c.write(f'names : {label_list_check_}')
+        c.write('train : ../../.' + str(os.path.join(FOLDERS_COCO[0])) + '/images' + '\n')
+        c.write('val : ../../.' + str(os.path.join(FOLDERS_COCO[1])) + '/images' + '\n')
+        c.write('test : ../../.' + str(os.path.join(FOLDERS_COCO[2])) + '/images' + '\n')
+        c.write('\n')
+        c.write(f'nc : {len(label_list_check_)}'+'\n')
+        c.write(f'names : {label_list_check_}')
     print('costom.yaml file.... created')
         
     if size == 'x':
